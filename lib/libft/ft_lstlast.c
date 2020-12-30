@@ -14,11 +14,9 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	int		i;
 	t_list	*tmp;
 	t_list	*tmp2;
 
-	i = 0;
 	if (lst == 0)
 		return ((void *)0);
 	tmp = lst;

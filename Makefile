@@ -1,7 +1,7 @@
 NAME = cub3d
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 # libft
 LIBFT = libft.a
@@ -43,7 +43,7 @@ ifeq ($(UNAME_S),Darwin)
 	MLX_DIR = lib/minilibx_mms_20200219
 	MLX_FLAGS = -L./$(MLX_DIR) -lmlx
 	MLX_CP = cp $(MLX_FILE) $(MLX)
-	MLX_RM = rm -f $(MLX)
+	# MLX_RM = rm -f $(MLX)
 endif
 MLX_FILE = $(MLX_DIR)/$(MLX)
 MLX_INC_DIR = $(MLX_DIR)
@@ -103,7 +103,7 @@ $(OBJ_DIR)/%.o : %.c
 $(NAME) : cub3d.c $(MLX_FILE) $(LIBFT_FILE) $(GNL_FILE) $(HEADERS) $(OBJS)
 	@printf "$(LF)🚀 $(FG_TEXT)Successfully Created $(FG_TEXT_PRIMARY)$(NAME)'s Object files $(FG_TEXT)!"
 	@printf "$(CRLF)📚 $(FG_TEXT)Create $(FG_TEXT_PRIMARY)cub3d$(FG_TEXT)!\n"
-	$(CC) -g $(CFLAGS) $(CINCLUDES) cub3d.c $(SRCS) -o $(NAME) $(LIBFT_FLAGS) $(GNL_FLAGS) $(MLX_FLAGS)
+	$(CC) $(CFLAGS) $(CINCLUDES) cub3d.c $(SRCS) -o $(NAME) $(LIBFT_FLAGS) $(GNL_FLAGS) $(MLX_FLAGS) -lm
 	@printf "$(LF)🎉 $(FG_TEXT)Successfully Created $(FG_TEXT_PRIMARY)$@ $(FG_TEXT)!\n$(NO_COLOR)"
 
 # Libft
@@ -142,8 +142,8 @@ $(MLX_FILE) :
 	@$(MLX_CP)
 
 $(MLX)_clean :
-	@make --no-print-directory -C $(MLX_DIR) clean
-	@$(MLX_RM)
+	# @make --no-print-directory -C $(MLX_DIR) clean
+	# @$(MLX_RM)
 
 .PHONY: all clean fclean re \
 	$(LIBFT) $(LIBFT)_clean $(LIBFT)_fclean \

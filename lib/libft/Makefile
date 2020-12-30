@@ -40,9 +40,8 @@ FILES = ft_strlen.c \
 		ft_itoa.c \
 		ft_strmapi.c \
 		ft_substr.c	\
-		ft_strtrim.c 
-
-BONUS = ft_lstnew.c \
+		ft_strtrim.c \
+		ft_lstnew.c \
 		ft_lstadd_front.c \
 		ft_lstsize.c \
 		ft_lstlast.c \
@@ -53,22 +52,17 @@ BONUS = ft_lstnew.c \
 		ft_lstmap.c
 
 OBJS = $(FILES:.c=.o)
-BONUS_OBJS = $(BONUS:.c=.o)
 
 all : $(NAME)
 
 $(NAME) : $(OBJS) 
 	ar rc $(NAME) $(OBJS)
-
-bonus : 
-	gcc $(CFLAGS) -c $(BONUS)
-	ar rc $(NAME) $(BONUS) $(BONUS_OBJS)
 	
 clean :
-	rm -f $(OBJS) $(BONUS_OBJS)
+	rm -f $(OBJS) 
 
 fclean :
-	rm -f $(OBJS) $(NAME) $(BONUS_OBJS)
+	rm -f $(OBJS) $(NAME) 
 	
 re : fclean all
 

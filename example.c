@@ -92,6 +92,7 @@ int	mouse_win3(int x,int y, void *p)
 int	main()
 {
   int	a;
+  int color, color2;
 
   printf("MinilibX Test Program\n");
   a = 0x11223344;
@@ -136,7 +137,8 @@ int	main()
   data1 = mlx_get_data_addr(im1,&bpp1,&sl1,&endian1);
   printf("OK (bpp1: %d, sizeline1: %d endian: %d type: %d)\n",bpp1,sl1,endian1,
 	 ((t_img *)im1)->type);
-
+   
+  printf("color2 : %d\n", color2);
   printf(" => Fill Image1 ...");
   color_map_2(data1,bpp1,sl1,IM1_SX,IM1_SY,endian1, 1);
   printf("OK (pixmap : %d)\n",(int)((t_img *)im1)->pix);
@@ -254,34 +256,17 @@ int	color_map_2(unsigned char *data,int bpp,int sl,int w,int h,int endian, int t
   printf("(opp : %d) ",opp);
   y = h;
   while (y--)
-    {
+  {
       ptr = data+y*sl;
       x = w;
       while (x--)
-        {
-	  if (type==2)
-	    color = (y*255)/w+((((w-x)*255)/w)<<16)
-	      +(((y*255)/h)<<8);
-	  else
-	    color = (x*255)/w+((((w-x)*255)/w)<<16)+(((y*255)/h)<<8);
+      {
+          color = (x*255)/w+((((w-x)*255)/w)<<16)+(((y*255)/h)<<8);
           color2 = mlx_get_color_value(mlx,color);
-	  dec = opp;
-	  while (dec--)
-	    if (endian==local_endian)
-	      {
-		if (endian)
-		  *(ptr+x*opp+dec) = ((unsigned char *)(&color2))[4-opp+dec];
-		else
-		  *(ptr+x*opp+dec) = ((unsigned char *)(&color2))[dec];
-	      }
-	    else
-	      {
-		if (endian)
-		  *(ptr+x*opp+dec) = ((unsigned char *)(&color2))[opp-1-dec];
-		else
-		  *(ptr+x*opp+dec) = ((unsigned char *)(&color2))[3-dec];
-	      }
-        }
-    }
-
+          printf("color2 : %d\n", color2);
+          dec = opp;
+          while (dec--)
+            *(ptr+x*opp+dec) = ((unsigned char *)(&color2))[dec];
+      }
+  }
 }
