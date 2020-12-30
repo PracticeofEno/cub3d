@@ -122,14 +122,8 @@ void cast_ray(double angle, int col_id)
     else
         v_dis = 999999999;
     if (h_dis < v_dis)
-    {
-        rays[col_id].hit.x = h_hit.x;
-        rays[col_id].hit.y = h_hit.y;
-    }
+        norminette_bypass(col_id, h_hit, h_dis);
     else
-    {
-        rays[col_id].hit.x = v_hit.x;
-        rays[col_id].hit.y = v_hit.y;
-    }
+        norminette_bypass(col_id, v_hit, v_dis);
 }
 

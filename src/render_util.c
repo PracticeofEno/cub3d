@@ -53,16 +53,16 @@ void draw_rect3(t_point p1, t_point p2, int color)
     int index;
     int x_index;
 
-    i = p1.y;
+    i = 0;
     index = 0;
     while (i < p2.y)
     {
         index = get_calc_index(p1.x, p1.y + i);
-        j = p1.x;
+        j = 0;
         while (j < p2.x)
         {
             x_index = get_calc_index(j, 0);
-            set_color((unsigned char *)&(game.img->data[index + x_index]), color);
+            set_color((unsigned char *)&(game.img2->data[index + x_index]), color);
             j++;
         }
         i++;

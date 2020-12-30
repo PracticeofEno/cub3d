@@ -23,7 +23,7 @@ void draw_3d_ray()
     i = 0;
     while (i < num_rays)
     {
-        distance = rays[i].distance * cos(rays[i].angle - player.rotation_angle);
+        distance = rays[i].distance;
         dis_projection = (map_width * TILE_SIZE / 2) / tan(fov_angle / 2);
         wall_strip_height = (TILE_SIZE / distance) * dis_projection;
         p1.x = i * wall_strip_width;
@@ -35,3 +35,9 @@ void draw_3d_ray()
     }
 }
 
+void norminette_bypass(int col_id, t_point hit_p, double hit_dis)
+{
+    rays[col_id].hit.x = hit_p.x;
+    rays[col_id].hit.y = hit_p.y;
+    rays[col_id].distance = hit_dis;
+}

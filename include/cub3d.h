@@ -124,4 +124,5 @@ void draw_2d_ray();
 void draw_3d_ray();
 void draw_rect3(t_point p1, t_point p2, int color);
 int get_calc_index3(int x, int y);
+void norminette_bypass(int col_id, t_point hit_p, double hit_dis);
 #endif
