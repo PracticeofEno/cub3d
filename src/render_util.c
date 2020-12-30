@@ -62,7 +62,7 @@ void draw_rect3(t_point p1, t_point p2, int color)
         while (j < p2.x)
         {
             x_index = get_calc_index(j, 0);
-            set_color((unsigned char *)&(game.img2->data[index + x_index]), color);
+            set_color((unsigned char *)&game.img2->data[index + x_index], color);
             j++;
         }
         i++;
@@ -105,7 +105,7 @@ void calc_ray()
     ray_angle = player.rotation_angle - (fov_angle / 2);
     while (i < num_rays)
     {
-        rays[i].angle = ray_angle;
+        rays[i].angle = normalize_angle(ray_angle);
         cast_ray(ray_angle, col_id);
         ray_angle = ray_angle + (fov_angle / num_rays);
         i++;

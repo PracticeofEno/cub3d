@@ -23,11 +23,11 @@ void draw_3d_ray()
     i = 0;
     while (i < num_rays)
     {
-        distance = rays[i].distance;
-        dis_projection = (map_width * TILE_SIZE / 2) / tan(fov_angle / 2);
-        wall_strip_height = (TILE_SIZE / distance) * dis_projection;
+        distance = rays[i].distance * cos(rays[i].angle - player.rotation_angle);
+        dis_projection = ((map_width * TILE_SIZE) / 2) / tan(fov_angle / 2);
+        wall_strip_height = (TILE_SIZE / (int)distance) * dis_projection;
         p1.x = i * wall_strip_width;
-        p1.y = (map_height * TILE_SIZE / 2) - (wall_strip_height / 2);
+        p1.y = ((map_height * TILE_SIZE) / 2) - (wall_strip_height / 2);
         p2.x = wall_strip_width;
         p2.y = wall_strip_height;
         draw_rect3(p1, p2, get_color(255,255,255));
