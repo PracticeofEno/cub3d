@@ -7,8 +7,8 @@ static void calc_h_ray(t_point interc, t_point step, t_point *hp, int rfd)
     next_h_p.x = interc.x;
     next_h_p.y = interc.y;
     hp->wall_hit = false;
-    while (next_h_p.x >= 0 && next_h_p.x < (map_width * TILE_SIZE)
-    && next_h_p.y >= 0 && next_h_p.y < (map_height * TILE_SIZE))
+    while (next_h_p.x >= 0 && next_h_p.x < (map_width * tile_size)
+    && next_h_p.y >= 0 && next_h_p.y < (map_height * tile_size))
     {
         if (is_wall(next_h_p.x, next_h_p.y - ((!rfd) ? 1 : 0)))
         {
@@ -36,14 +36,14 @@ static void horizontal_check(t_point *hit_point, double angle, int col_id)
     rfd = angle > 0 && angle < PI;
     rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
     printf("is facing right ? %d %d\n", rfr, col_id);
-    intercept.y = floor(player.y / TILE_SIZE) * TILE_SIZE;
+    intercept.y = floor(player.y / tile_size) * tile_size;
     if (rfd)
-        intercept.y += TILE_SIZE;
+        intercept.y += tile_size;
     intercept.x = player.x + (intercept.y - player.y) / tan(angle);
-    step.y = TILE_SIZE;
+    step.y = tile_size;
     if (!(rfd))
         step.y = step.y * -1;
-    step.x = TILE_SIZE / tan(angle);
+    step.x = tile_size / tan(angle);
     if (!(rfr) && step.x > 0)
         step.x = step.x * -1;
     if ((rfr) && step.x < 0)
@@ -59,8 +59,8 @@ static void calc_v_ray(t_point interc, t_point step, t_point *hp, int rfr)
     next_h_p.y = interc.y;
     hp->wall_hit = false;
     
-    while (next_h_p.x >= 0 && next_h_p.x < (map_width * TILE_SIZE)
-    && next_h_p.y >= 0 && next_h_p.y < (map_height * TILE_SIZE))
+    while (next_h_p.x >= 0 && next_h_p.x < (map_width * tile_size)
+    && next_h_p.y >= 0 && next_h_p.y < (map_height * tile_size))
     {
         if (is_wall(next_h_p.x - ((!rfr) ? 1 : 0), next_h_p.y))
         {
@@ -88,14 +88,14 @@ static void vertical_check(t_point *hit_point, double angle, int col_id)
     rfd = angle > 0 && angle < PI;
     rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
     printf("is facing right ? %d %d\n", rfr, col_id);
-    intercept.x = floor(player.x / TILE_SIZE) * TILE_SIZE;
+    intercept.x = floor(player.x / tile_size) * tile_size;
     if (rfr)
-        intercept.x += TILE_SIZE;
+        intercept.x += tile_size;
     intercept.y = player.y + (intercept.x - player.x) * tan(angle);
-    step.x = TILE_SIZE;
+    step.x = tile_size;
     if (!(rfr))
         step.x = step.x * -1;
-    step.y = TILE_SIZE * tan(angle);
+    step.y = tile_size * tan(angle);
     if (!(rfd) && step.y > 0)
         step.y = step.y * -1;
     if ((rfd) && step.y < 0)

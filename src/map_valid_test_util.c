@@ -75,12 +75,12 @@ char **map_valid_test(t_list *lst)
 
 int is_wall(int x, int y)
 {
-    if (x < 0 || x > map_width * TILE_SIZE)
+    if (x < 0 || x > map_width * tile_size)
         return (1);
-    if (y < 0 || y > map_height * TILE_SIZE)
+    if (y < 0 || y > map_height * tile_size)
         return (1);
-    int x1 = floor(x / TILE_SIZE);
-    int y1 = floor(y / TILE_SIZE);
+    int x1 = floor(x / tile_size);
+    int y1 = floor(y / tile_size);
     if (map[y1][x1] == '1')
         return (1);
     else

@@ -1,6 +1,5 @@
 #ifndef CUB3D_H
 # define CUB3D_H
-# define TILE_SIZE 32
 # define PI 3.141592653589
 
 # include <stdio.h>
@@ -44,6 +43,25 @@ typedef struct s_game
     char **map;
 }               t_game;
 
+typedef struct s_direction
+{
+    t_img *no;
+    int no_w;
+    int no_h;
+    t_img *we;
+    int we_w;
+    int we_h;
+    t_img *so;
+    int so_w;
+    int so_h;
+    t_img *ea;
+    int ea_w;
+    int ea_h;
+    t_img *item;
+    int item_w;
+    int item_h;
+}               t_direction;
+
 typedef struct s_map_data
 {
     int width;
@@ -71,6 +89,7 @@ typedef struct s_player
 }               t_player;
 
 t_game game;
+t_direction texture;
 t_map_data md;
 t_player player;
 t_point p1;
@@ -83,6 +102,7 @@ int map_width;
 double fov_angle;
 int wall_strip_width;
 int num_rays;
+int tile_size;
 
 int cub_parse(int fd);
 int set_env_data(char **splits);
@@ -122,7 +142,17 @@ void cast_ray(double angle, int col_id);
 double get_distance(double x1, double y1, double x2, double y2);
 void draw_2d_ray();
 void draw_3d_ray();
-void draw_rect3(t_point p1, t_point p2, int color);
+void draw_cols(t_point p1, t_point p2, t_ray ray);
 int get_calc_index3(int x, int y);
 void norminette_bypass(int col_id, t_point hit_p, double hit_dis);
+void reset_img();
+int texture_check();
+void draw_sky(t_point p1, t_point p2);
+void draw_land(t_point p1, t_point p2);
+void draw_texture(t_point p1, t_point p2, t_ray ray);
+t_img *dl_tex(int x, int y, t_ray ray, int index);
+t_img *dr_tex(int x, int y, t_ray ray, int index);
+t_img *ul_tex(int x, int y, t_ray ray, int index);
+t_img *ur_tex(int x, int y, t_ray ray, int index);
+int set_angle(char angle);
 #endif

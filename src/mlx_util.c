@@ -51,7 +51,7 @@ void draw_line(t_game game, t_point *p1, t_point *p2, int color)
         step = abs(dy);
     dx = dx / step;
     dy = dy / step;
-    while (fabs(p2->x - p1->x) > 0.0001 || fabs(p2->y - p1->y) > 0.0001)
+    while (fabs(p2->x - p1->x) > 0.00001 || fabs(p2->y - p1->y) > 0.00001)
     {
         set_color((unsigned char *)&game.img->data[get_calc_index((int)(p1->x), (int)(p1->y))], color);
         p1->x = p1->x + dx;

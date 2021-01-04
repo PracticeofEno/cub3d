@@ -46,27 +46,11 @@ void draw_rect2(int x, int y, int size, int color)
     }
 }
 
-void draw_rect3(t_point p1, t_point p2, int color)
+void draw_cols(t_point p1, t_point p2, t_ray ray)
 {
-    int i;
-    int j;
-    int index;
-    int x_index;
-
-    i = 0;
-    index = 0;
-    while (i < p2.y)
-    {
-        index = get_calc_index(p1.x, p1.y + i);
-        j = 0;
-        while (j < p2.x)
-        {
-            x_index = get_calc_index(j, 0);
-            set_color((unsigned char *)&game.img2->data[index + x_index], color);
-            j++;
-        }
-        i++;
-    }
+    draw_sky(p1, p2);
+    draw_texture(p1, p2, ray);
+    draw_land(p1, p2);
 }
 
 void draw_2d_map()
@@ -82,12 +66,12 @@ void draw_2d_map()
         j = 0;
         while (j < map_width)
         {
-            location_x = j * TILE_SIZE;
-            location_y = i * TILE_SIZE;
+            location_x = j * tile_size;
+            location_y = i * tile_size;
             if (map[i][j] == '1')
-                draw_rect(&game, location_x, location_y, TILE_SIZE);
+                draw_rect(&game, location_x, location_y, tile_size);
             else
-                draw_rect2(location_x, location_y, TILE_SIZE, get_color(0,0,0));
+                draw_rect2(location_x, location_y, tile_size, get_color(0,0,0));
             j++;
         }
         i++;

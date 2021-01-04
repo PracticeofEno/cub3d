@@ -7,12 +7,12 @@ char **get_img_data(int width, int height)
     char **tmp;
 
     i = 0;
-    size = height * TILE_SIZE;
-    if (!(tmp = (char**)malloc((height * TILE_SIZE) * sizeof(char*))))
+    size = height * tile_size;
+    if (!(tmp = (char**)malloc((height * tile_size) * sizeof(char*))))
         return (0);
     while (i < size)
     {
-        if (!(tmp[i] = (char*)malloc(sizeof(char) * width * TILE_SIZE)))
+        if (!(tmp[i] = (char*)malloc(sizeof(char) * width * tile_size)))
             return (0);
         i++;
     }
@@ -86,8 +86,8 @@ int make_color(char *color, t_color **location)
         return (-1);
     *location = tmp;
     r = ft_atoi(splits[0]);
-    g = ft_atoi(splits[0]);
-    b = ft_atoi(splits[0]);
+    g = ft_atoi(splits[1]);
+    b = ft_atoi(splits[2]);
     (*location)->r = r;
     (*location)->g = g;
     (*location)->b = b;

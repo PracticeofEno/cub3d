@@ -1,5 +1,27 @@
 #include "cub3d.h"
 
+void reset_img()
+{
+    int i;
+    int j;
+    int width;
+    int height;
+
+    width = map_width * tile_size;
+    height = map_height * tile_size;
+    while (i < height)
+    {
+        j = 0;
+        while (j < width)
+        {
+            set_color((unsigned char *)&game.img2->data[get_calc_index(j, i)], get_color(0,0,0));
+            j++;
+        }
+        i++;
+    }
+
+}
+
 void draw_2d_ray()
 {
     int i;
@@ -24,13 +46,19 @@ void draw_3d_ray()
     while (i < num_rays)
     {
         distance = rays[i].distance * cos(rays[i].angle - player.rotation_angle);
-        dis_projection = ((map_width * TILE_SIZE) / 2) / tan(fov_angle / 2);
-        wall_strip_height = (TILE_SIZE / (int)distance) * dis_projection;
+        dis_projection = ((map_width * tile_size) / 2) / tan(fov_angle / 2);
+        wall_strip_height = (tile_size / distance) * dis_projection;
         p1.x = i * wall_strip_width;
-        p1.y = ((map_height * TILE_SIZE) / 2) - (wall_strip_height / 2);
+        p1.y = ((double)(map_height * tile_size) / 2) - (wall_strip_height / 2);
+        if (p1.y < 0)
+            p1.y = 0;
         p2.x = wall_strip_width;
         p2.y = wall_strip_height;
-        draw_rect3(p1, p2, get_color(255,255,255));
+        if (p2.y > tile_size * map_height)
+            p2.y = tile_size * map_height;
+        printf("p1.x : %lf  p1.y : %lf\n", p1.x, p1.y);
+        printf("p2.x : %lf  p2.y : %lf\n", p2.x, p2.y);
+        draw_cols(p1, p2, rays[i]);
         i++;
     }
 }

@@ -15,7 +15,10 @@ static int try_r(char **splits)
     int arr_length;
     int width;
     int height;
+    int max_size_x;
+    int max_size_y;
 
+    mlx_get_screen_size(game.mlx, &max_size_x, &max_size_y);
     arr_length = splits_length(splits);
     if(arr_length != 3)
         return (-1);
@@ -25,6 +28,10 @@ static int try_r(char **splits)
         return (-1);
     md.width = width;
     md.height = height;
+    if (md.width > max_size_x)
+        md.width = max_size_x;
+    if (md.height > max_size_y)
+        md.height = max_size_y;
     return (0);
 }
 

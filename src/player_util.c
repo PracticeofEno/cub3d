@@ -74,5 +74,7 @@ int key_released(int key, void *p)
         player.turn_direction = 0;
     else if (key == 100)
         player.turn_direction = 0;
+    else if (key == 65307)
+        exit(1);
     return (0);
 }
