@@ -32,8 +32,8 @@ void player_init()
     player.radius = 3;
     player.turn_direction = 0;
     player.walk_direction = 0;
-    player.move_speed = 1.5;
-    player.rotation_speed = 2 * (PI / 180);
+    player.move_speed = 3;
+    player.rotation_speed = 4 * (PI / 180);
 }
 
 void player_setting()

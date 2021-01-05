@@ -29,6 +29,7 @@ typedef struct s_ray
     double angle;
     t_point hit;
     double distance;
+    bool    hit_tf;
 
 }               t_ray;
 
@@ -144,7 +145,7 @@ void draw_2d_ray();
 void draw_3d_ray();
 void draw_cols(t_point p1, t_point p2, t_ray ray);
 int get_calc_index3(int x, int y);
-void norminette_bypass(int col_id, t_point hit_p, double hit_dis);
+void norminette_bypass(int col_id, t_point hit_p, double hit_dis, bool hit_tf);
 void reset_img();
 int texture_check();
 void draw_sky(t_point p1, t_point p2);
@@ -155,4 +156,6 @@ t_img *dr_tex(int x, int y, t_ray ray, int index);
 t_img *ul_tex(int x, int y, t_ray ray, int index);
 t_img *ur_tex(int x, int y, t_ray ray, int index);
 int set_angle(char angle);
+void    cast_ray_sprite(double angle, int col_id);
+void calc_ray_sprite();
 #endif

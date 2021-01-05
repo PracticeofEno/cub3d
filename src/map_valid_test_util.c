@@ -95,6 +95,8 @@ int is_wall(int x, int y)
     int y1 = floor(y / tile_size);
     if (map[y1][x1] == '1')
         return (1);
+    else if (map[y1][x1] == '2')
+        return (2);
     else
         return (0);
 }

@@ -20,7 +20,7 @@ double d2r()
 void default_setting()
 {
     fov_angle = 60 * (PI / 180);
-    wall_strip_width = 1;
+    wall_strip_width = 2;
     num_rays = (map_width * tile_size) / wall_strip_width;
     rays = (t_ray *)malloc((num_rays) * sizeof(t_ray));
     if (rays == 0)
@@ -62,4 +62,5 @@ void render()
     calc_ray();
     draw_2d_ray();
     draw_3d_ray();
+    calc_ray_sprite();
 }

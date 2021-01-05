@@ -54,7 +54,7 @@ void player_update()
     move_step = player.walk_direction * player.move_speed;
     new_x = player.x + cos(player.rotation_angle) * move_step;
     new_y = player.y + sin(player.rotation_angle) * move_step;
-    if (!is_wall(new_x + 3, new_y + 3) && !is_wall(new_x - 3, new_y - 3))
+    if (is_wall(new_x + 3, new_y + 3) != 1 && is_wall(new_x - 3, new_y - 3) != 1)
     {
         player.x = new_x;
         player.y = new_y;

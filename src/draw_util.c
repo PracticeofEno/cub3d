@@ -75,9 +75,10 @@ void draw_3d_ray()
     }
 }
 
-void norminette_bypass(int col_id, t_point hit_p, double hit_dis)
+void norminette_bypass(int col_id, t_point hit_p, double hit_dis, bool hit_tf)
 {
     rays[col_id].hit.x = hit_p.x;
     rays[col_id].hit.y = hit_p.y;
     rays[col_id].distance = hit_dis;
+    rays[col_id].hit_tf = hit_tf;
 }

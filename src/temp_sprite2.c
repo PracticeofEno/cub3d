@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cast_util.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sanghpar <sanghpar@student.42seoul.>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/04 13:29:18 by sanghpar          #+#    #+#             */
-/*   Updated: 2021/01/04 14:10:40 by sanghpar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
-static void		calc_h_ray(t_point interc, t_point step, t_point *hp, int rfd)
+static void		calc_h_ray_s(t_point interc, t_point step, t_point *hp, int rfd)
 {
 	t_point	next_h_p;
 
@@ -22,7 +10,7 @@ static void		calc_h_ray(t_point interc, t_point step, t_point *hp, int rfd)
 	while (next_h_p.x >= 0 && next_h_p.x < (map_width * tile_size)
 			&& next_h_p.y >= 0 && next_h_p.y < (map_height * tile_size))
 	{
-		if (is_wall(next_h_p.x, next_h_p.y - ((!rfd) ? 1 : 0)) == 1)
+		if (is_wall(next_h_p.x, next_h_p.y - ((!rfd) ? 1 : 0)) == 2)
 		{
 			hp->wall_hit = true;
 			hp->x = next_h_p.x;
@@ -37,7 +25,7 @@ static void		calc_h_ray(t_point interc, t_point step, t_point *hp, int rfd)
 	}
 }
 
-static void		horizontal_check(t_point *hit_point, double angle, int col_id)
+static void		horizontal_check_s(t_point *hit_point, double angle, int col_id)
 {
 	t_point	intercept;
 	t_point	step;
@@ -45,7 +33,6 @@ static void		horizontal_check(t_point *hit_point, double angle, int col_id)
 	int		rfr;
 
 	angle = normalize_angle(angle);
-	hit_point->wall_hit = false;
 	rfd = angle > 0 && angle < PI;
 	rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
 	printf("is facing right ? %d %d\n", rfr, col_id);
@@ -61,10 +48,10 @@ static void		horizontal_check(t_point *hit_point, double angle, int col_id)
 		step.x = step.x * -1;
 	if ((rfr) && step.x < 0)
 		step.x = step.x * -1;
-	calc_h_ray(intercept, step, hit_point, rfd);
+	calc_h_ray_s(intercept, step, hit_point, rfd);
 }
 
-static void		calc_v_ray(t_point interc, t_point step, t_point *hp, int rfr)
+static void		calc_v_ray_s(t_point interc, t_point step, t_point *hp, int rfr)
 {
 	t_point	next_h_p;
 
@@ -74,7 +61,7 @@ static void		calc_v_ray(t_point interc, t_point step, t_point *hp, int rfr)
 	while (next_h_p.x >= 0 && next_h_p.x < (map_width * tile_size)
 			&& next_h_p.y >= 0 && next_h_p.y < (map_height * tile_size))
 	{
-		if (is_wall(next_h_p.x - ((!rfr) ? 1 : 0), next_h_p.y) == 1)
+		if (is_wall(next_h_p.x - ((!rfr) ? 1 : 0), next_h_p.y) == 2)
 		{
 			hp->wall_hit = true;
 			hp->x = next_h_p.x;
@@ -89,7 +76,7 @@ static void		calc_v_ray(t_point interc, t_point step, t_point *hp, int rfr)
 	}
 }
 
-static void		vertical_check(t_point *hit_point, double angle, int col_id)
+static void		vertical_check_s(t_point *hit_point, double angle, int col_id)
 {
 	t_point intercept;
 	t_point step;
@@ -97,7 +84,6 @@ static void		vertical_check(t_point *hit_point, double angle, int col_id)
 	int		rfr;
 
 	angle = normalize_angle(angle);
-	hit_point->wall_hit = false;
 	rfd = angle > 0 && angle < PI;
 	rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
 	printf("is facing right ? %d %d\n", rfr, col_id);
@@ -113,19 +99,19 @@ static void		vertical_check(t_point *hit_point, double angle, int col_id)
 		step.y = step.y * -1;
 	if ((rfd) && step.y < 0)
 		step.y = step.y * -1;
-	calc_v_ray(intercept, step, hit_point, rfr);
+	calc_v_ray_s(intercept, step, hit_point, rfr);
 	temp(&step.y);
 }
 
-void			cast_ray(double angle, int col_id)
+void			cast_ray_sprite(double angle, int col_id)
 {
 	t_point h_hit;
 	t_point v_hit;
 	double	h_dis;
 	double	v_dis;
 
-	horizontal_check(&h_hit, angle, col_id);
-	vertical_check(&v_hit, angle, col_id);
+	horizontal_check_s(&h_hit, angle, col_id);
+	vertical_check_s(&v_hit, angle, col_id);
 	if (h_hit.wall_hit == true)
 		h_dis = get_distance(player.x, player.y, h_hit.x, h_hit.y);
 	else
