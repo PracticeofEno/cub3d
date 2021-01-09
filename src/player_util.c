@@ -51,6 +51,7 @@ void player_update()
     double new_y;
 
     player.rotation_angle += player.turn_direction * player.rotation_speed;
+    player.rotation_angle = normalize_angle(player.rotation_angle);
     move_step = player.walk_direction * player.move_speed;
     new_x = player.x + cos(player.rotation_angle) * move_step;
     new_y = player.y + sin(player.rotation_angle) * move_step;

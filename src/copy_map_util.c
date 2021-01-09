@@ -64,3 +64,12 @@ double normalize_angle(double angle)
         angle = (2 * PI) + angle;
     return (angle);
 }
+
+double atan_angle(double angle)
+{
+    if (angle < 0)
+        angle = angle * -1;
+    else if (angle > 0)
+        angle = (2 * PI) - angle;
+    return (angle);
+}

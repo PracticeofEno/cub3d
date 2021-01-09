@@ -20,10 +20,11 @@ double d2r()
 void default_setting()
 {
     fov_angle = 60 * (PI / 180);
-    wall_strip_width = 2;
+    wall_strip_width = 1;
     num_rays = (map_width * tile_size) / wall_strip_width;
     rays = (t_ray *)malloc((num_rays) * sizeof(t_ray));
-    if (rays == 0)
+    sp_rays = (t_ray *)malloc((num_rays) * sizeof(t_ray));
+    if (rays == 0 || sp_rays == 0)
         exit(1);
 }
 
@@ -51,16 +52,15 @@ void update()
 
 void render()
 {
-    //t_point a;
-    //t_point b;
-
     reset_img();
     mlx_put_image_to_window(game.mlx, game.win2, game.img2, 0, 0);
     update();
     draw_2d_map();
     player_render();
     calc_ray();
-    draw_2d_ray();
+    //draw_2d_ray();
     draw_3d_ray();
     calc_ray_sprite();
+    draw_sprite();
+    printf("p_rotation_angle : %f\n", player.rotation_angle);
 }

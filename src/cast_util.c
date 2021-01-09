@@ -37,7 +37,7 @@ static void		calc_h_ray(t_point interc, t_point step, t_point *hp, int rfd)
 	}
 }
 
-static void		horizontal_check(t_point *hit_point, double angle, int col_id)
+static void		horizontal_check(t_point *hit_point, double angle)
 {
 	t_point	intercept;
 	t_point	step;
@@ -48,7 +48,6 @@ static void		horizontal_check(t_point *hit_point, double angle, int col_id)
 	hit_point->wall_hit = false;
 	rfd = angle > 0 && angle < PI;
 	rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
-	printf("is facing right ? %d %d\n", rfr, col_id);
 	intercept.y = floor(player.y / tile_size) * tile_size;
 	if (rfd)
 		intercept.y += tile_size;
@@ -89,7 +88,7 @@ static void		calc_v_ray(t_point interc, t_point step, t_point *hp, int rfr)
 	}
 }
 
-static void		vertical_check(t_point *hit_point, double angle, int col_id)
+static void		vertical_check(t_point *hit_point, double angle)
 {
 	t_point intercept;
 	t_point step;
@@ -100,7 +99,6 @@ static void		vertical_check(t_point *hit_point, double angle, int col_id)
 	hit_point->wall_hit = false;
 	rfd = angle > 0 && angle < PI;
 	rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
-	printf("is facing right ? %d %d\n", rfr, col_id);
 	intercept.x = floor(player.x / tile_size) * tile_size;
 	if (rfr)
 		intercept.x += tile_size;
@@ -124,8 +122,8 @@ void			cast_ray(double angle, int col_id)
 	double	h_dis;
 	double	v_dis;
 
-	horizontal_check(&h_hit, angle, col_id);
-	vertical_check(&v_hit, angle, col_id);
+	horizontal_check(&h_hit, angle);
+	vertical_check(&v_hit, angle);
 	if (h_hit.wall_hit == true)
 		h_dis = get_distance(player.x, player.y, h_hit.x, h_hit.y);
 	else

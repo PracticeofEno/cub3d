@@ -1,18 +1,18 @@
 #include "cub3d.h"
 
-static void		calc_h_ray_s(t_point interc, t_point step, t_point *hp, int rfd)
+static void		calc_h_ray_s(t_point interc, t_point step, t_point *hp)
 {
 	t_point	next_h_p;
 
 	next_h_p.x = interc.x;
 	next_h_p.y = interc.y;
-	hp->wall_hit = false;
+	hp->sprite_hit = false;
 	while (next_h_p.x >= 0 && next_h_p.x < (map_width * tile_size)
 			&& next_h_p.y >= 0 && next_h_p.y < (map_height * tile_size))
 	{
-		if (is_wall(next_h_p.x, next_h_p.y - ((!rfd) ? 1 : 0)) == 2)
+		if (is_wall(next_h_p.x, next_h_p.y) == 2)
 		{
-			hp->wall_hit = true;
+			hp->sprite_hit = true;
 			hp->x = next_h_p.x;
 			hp->y = next_h_p.y;
 			break ;
@@ -25,7 +25,7 @@ static void		calc_h_ray_s(t_point interc, t_point step, t_point *hp, int rfd)
 	}
 }
 
-static void		horizontal_check_s(t_point *hit_point, double angle, int col_id)
+static void		horizontal_check_s(t_point *hit_point, double angle)
 {
 	t_point	intercept;
 	t_point	step;
@@ -35,7 +35,6 @@ static void		horizontal_check_s(t_point *hit_point, double angle, int col_id)
 	angle = normalize_angle(angle);
 	rfd = angle > 0 && angle < PI;
 	rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
-	printf("is facing right ? %d %d\n", rfr, col_id);
 	intercept.y = floor(player.y / tile_size) * tile_size;
 	if (rfd)
 		intercept.y += tile_size;
@@ -48,22 +47,22 @@ static void		horizontal_check_s(t_point *hit_point, double angle, int col_id)
 		step.x = step.x * -1;
 	if ((rfr) && step.x < 0)
 		step.x = step.x * -1;
-	calc_h_ray_s(intercept, step, hit_point, rfd);
+	calc_h_ray_s(intercept, step, hit_point);
 }
 
-static void		calc_v_ray_s(t_point interc, t_point step, t_point *hp, int rfr)
+static void		calc_v_ray_s(t_point interc, t_point step, t_point *hp)
 {
 	t_point	next_h_p;
 
 	next_h_p.x = interc.x;
 	next_h_p.y = interc.y;
-	hp->wall_hit = false;
+	hp->sprite_hit = false;
 	while (next_h_p.x >= 0 && next_h_p.x < (map_width * tile_size)
 			&& next_h_p.y >= 0 && next_h_p.y < (map_height * tile_size))
 	{
-		if (is_wall(next_h_p.x - ((!rfr) ? 1 : 0), next_h_p.y) == 2)
+		if (is_wall(next_h_p.x, next_h_p.y) == 2)
 		{
-			hp->wall_hit = true;
+			hp->sprite_hit = true;
 			hp->x = next_h_p.x;
 			hp->y = next_h_p.y;
 			break ;
@@ -76,7 +75,7 @@ static void		calc_v_ray_s(t_point interc, t_point step, t_point *hp, int rfr)
 	}
 }
 
-static void		vertical_check_s(t_point *hit_point, double angle, int col_id)
+static void		vertical_check_s(t_point *hit_point, double angle)
 {
 	t_point intercept;
 	t_point step;
@@ -86,7 +85,6 @@ static void		vertical_check_s(t_point *hit_point, double angle, int col_id)
 	angle = normalize_angle(angle);
 	rfd = angle > 0 && angle < PI;
 	rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
-	printf("is facing right ? %d %d\n", rfr, col_id);
 	intercept.x = floor(player.x / tile_size) * tile_size;
 	if (rfr)
 		intercept.x += tile_size;
@@ -99,7 +97,7 @@ static void		vertical_check_s(t_point *hit_point, double angle, int col_id)
 		step.y = step.y * -1;
 	if ((rfd) && step.y < 0)
 		step.y = step.y * -1;
-	calc_v_ray_s(intercept, step, hit_point, rfr);
+	calc_v_ray_s(intercept, step, hit_point);
 	temp(&step.y);
 }
 
@@ -110,18 +108,18 @@ void			cast_ray_sprite(double angle, int col_id)
 	double	h_dis;
 	double	v_dis;
 
-	horizontal_check_s(&h_hit, angle, col_id);
-	vertical_check_s(&v_hit, angle, col_id);
-	if (h_hit.wall_hit == true)
+	horizontal_check_s(&h_hit, angle);
+	vertical_check_s(&v_hit, angle);
+	if (h_hit.sprite_hit == true)
 		h_dis = get_distance(player.x, player.y, h_hit.x, h_hit.y);
 	else
 		h_dis = 999999999;
-	if (v_hit.wall_hit == true)
+	if (v_hit.sprite_hit == true)
 		v_dis = get_distance(player.x, player.y, v_hit.x, v_hit.y);
 	else
 		v_dis = 999999999;
 	if (h_dis < v_dis)
-		norminette_bypass(col_id, h_hit, h_dis, h_hit.wall_hit);
+		norminette_bypass2(col_id, h_hit, h_dis, h_hit.sprite_hit);
 	else
-		norminette_bypass(col_id, v_hit, v_dis, v_hit.wall_hit);
+		norminette_bypass2(col_id, v_hit, v_dis, v_hit.sprite_hit);
 }

@@ -21,6 +21,7 @@ void reset_img()
 
     width = map_width * tile_size;
     height = map_height * tile_size;
+    i = 0;
     while (i < height)
     {
         j = 0;
@@ -68,8 +69,6 @@ void draw_3d_ray()
         p2.y = wall_strip_height;
         if (p2.y > tile_size * map_height)
             p2.y = tile_size * map_height;
-        printf("p1.x : %lf  p1.y : %lf\n", p1.x, p1.y);
-        printf("p2.x : %lf  p2.y : %lf\n", p2.x, p2.y);
         draw_cols(p1, p2, rays[i]);
         i++;
     }
@@ -81,4 +80,12 @@ void norminette_bypass(int col_id, t_point hit_p, double hit_dis, bool hit_tf)
     rays[col_id].hit.y = hit_p.y;
     rays[col_id].distance = hit_dis;
     rays[col_id].hit_tf = hit_tf;
+}
+
+void norminette_bypass2(int col_id, t_point hit_p, double hit_dis, bool hit_tf)
+{
+    sp_rays[col_id].hit.x = hit_p.x;
+    sp_rays[col_id].hit.y = hit_p.y;
+    sp_rays[col_id].distance = hit_dis;
+    sp_rays[col_id].hit_tf = hit_tf;
 }

@@ -62,6 +62,8 @@ char			*ft_strtrim(const char *s, const char *delset);
 typedef struct	s_list
 {
 	void			*content;
+	double			min_angle;
+	double			max_angle;
 	struct s_list	*next;
 }				t_list;
 

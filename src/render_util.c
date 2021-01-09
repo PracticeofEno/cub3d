@@ -82,6 +82,8 @@ void draw_2d_map()
             location_y = i * tile_size;
             if (map[i][j] == '1')
                 draw_rect(&game, location_x, location_y, tile_size);
+            else if (map[i][j] == '2')
+                draw_rect2(location_x, location_y, tile_size, get_color(255,0,0));
             else
                 draw_rect2(location_x, location_y, tile_size, get_color(0,0,0));
             j++;

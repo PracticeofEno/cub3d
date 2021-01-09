@@ -22,6 +22,7 @@ typedef struct s_point
     double x;
     double y;
     bool wall_hit;
+    bool sprite_hit;
 }               t_point;
 
 typedef struct s_ray
@@ -30,7 +31,8 @@ typedef struct s_ray
     t_point hit;
     double distance;
     bool    hit_tf;
-
+    double s_angle;
+    double e_angle;
 }               t_ray;
 
 typedef struct s_game
@@ -96,6 +98,7 @@ t_player player;
 t_point p1;
 t_point p2;
 t_ray *rays;
+t_ray *sp_rays;
 
 char **map;
 int map_height;
@@ -144,8 +147,8 @@ double get_distance(double x1, double y1, double x2, double y2);
 void draw_2d_ray();
 void draw_3d_ray();
 void draw_cols(t_point p1, t_point p2, t_ray ray);
-int get_calc_index3(int x, int y);
 void norminette_bypass(int col_id, t_point hit_p, double hit_dis, bool hit_tf);
+void norminette_bypass2(int col_id, t_point hit_p, double hit_dis, bool hit_tf);
 void reset_img();
 int texture_check();
 void draw_sky(t_point p1, t_point p2);
@@ -158,4 +161,10 @@ t_img *ur_tex(int x, int y, t_ray ray, int index);
 int set_angle(char angle);
 void    cast_ray_sprite(double angle, int col_id);
 void calc_ray_sprite();
+void draw_sprite();
+int is_sprite(int x, int y);
+void set_distance(t_list *sp_list);
+void test(t_list *sp_list);
+double atan_angle(double angle);
+int get_calc_index2(int x, int y, t_img *img);
 #endif
