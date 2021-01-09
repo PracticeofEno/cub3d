@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sanghpar <sanghpar@student.42seoul.>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/10 04:41:19 by sanghpar          #+#    #+#             */
+/*   Updated: 2021/01/10 04:42:18 by sanghpar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int main(int argc, char** argv)
+int	main(int argc, char **argv)
 {
 	int fd;
 
@@ -13,7 +25,7 @@ int main(int argc, char** argv)
 			printf("\nError in open\n");
 			return (-1);
 		}
-		if(cub_parse(fd) == -1)
+		if (cub_parse(fd) == -1)
 		{
 			printf("\nError in parsing\n");
 			return (-1);

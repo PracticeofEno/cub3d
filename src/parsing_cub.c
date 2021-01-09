@@ -6,31 +6,36 @@
 /*   By: sanghpar <sanghpar@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 13:46:20 by sanghpar          #+#    #+#             */
-/*   Updated: 2021/01/04 13:52:36 by sanghpar         ###   ########.fr       */
+/*   Updated: 2021/01/10 04:51:56 by sanghpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		texture_check()
+int		texture_check(void)
 {
-	if (!(texture.ea = (t_img *)mlx_xpm_file_to_image(game.mlx, md.east, &texture.ea_w, &texture.ea_h)))
+	if (!(texture.ea = (t_img *)mlx_xpm_file_to_image(game.mlx,
+					md.east, &texture.ea_w, &texture.ea_h)))
 		return (-1);
-	if (!(texture.no = (t_img *)mlx_xpm_file_to_image(game.mlx, md.north, &texture.no_w, &texture.no_h)))
+	if (!(texture.no = (t_img *)mlx_xpm_file_to_image(game.mlx,
+					md.north, &texture.no_w, &texture.no_h)))
 		return (-1);
-	if (!(texture.we = (t_img *)mlx_xpm_file_to_image(game.mlx, md.west, &texture.we_w, &texture.we_h)))
+	if (!(texture.we = (t_img *)mlx_xpm_file_to_image(game.mlx,
+					md.west, &texture.we_w, &texture.we_h)))
 		return (-1);
-	if (!(texture.so = (t_img *)mlx_xpm_file_to_image(game.mlx, md.south, &texture.so_w, &texture.so_h)))
+	if (!(texture.so = (t_img *)mlx_xpm_file_to_image(game.mlx,
+					md.south, &texture.so_w, &texture.so_h)))
 		return (-1);
-	if (!(texture.item = (t_img *)mlx_xpm_file_to_image(game.mlx, md.sprite, &texture.so_w, &texture.so_h)))
+	if (!(texture.item = (t_img *)mlx_xpm_file_to_image(game.mlx,
+					md.sprite, &texture.so_w, &texture.so_h)))
 		return (-1);
 	return (1);
 }
 
-int		check_complete()
+int		check_complete(void)
 {
 	if (md.width != 0 && md.height != 0 && md.north != 0 && md.south != 0
-			&& md.west != 0 && md.east != 0 && md.sprite != 0 && md.f != 0 && md.c != 0)
+	&& md.west != 0 && md.east != 0 && md.sprite != 0 && md.f != 0 && md.c != 0)
 		return (1);
 	return (-1);
 }
@@ -38,7 +43,7 @@ int		check_complete()
 int		set_data(char *line)
 {
 	char **splits;
-	
+
 	splits = ft_split(line, ' ');
 	if (*splits == 0)
 	{
@@ -59,9 +64,9 @@ int		set_data(char *line)
 
 int		parse_data(int fd)
 {
+	char	*line;
 	int		i;
-    char	*line;
-	
+
 	line = 0;
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
@@ -83,10 +88,10 @@ int		parse_data(int fd)
 
 int		cub_parse(int fd)
 {
-	t_list	*lst;
 	int		w_tile;
 	int		h_tile;
-	
+	t_list	*lst;
+
 	lst = 0;
 	if (!(game.mlx = mlx_init()))
 		return (-1);
