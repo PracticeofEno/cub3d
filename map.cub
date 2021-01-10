@@ -4,7 +4,7 @@ R 640 360
 SO ./nam.xpm
 
 
-NO      ./buk2.xpm
+NO      ./buk.xpm
 
 WE ./su.xpm
 EA ./slime.xpm
