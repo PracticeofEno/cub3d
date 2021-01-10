@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static void		calc_h_ray_s(t_point interc, t_point step, t_point *hp)
+static	void	calc_h_ray_s(t_point interc, t_point step, t_point *hp)
 {
 	t_point	next_h_p;
 

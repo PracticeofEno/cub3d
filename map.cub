@@ -7,7 +7,7 @@ SO ./nam.xpm
 NO      ./buk2.xpm
 
 WE ./su.xpm
-EA ./dong.xpm
+EA ./slime.xpm
 
 S        ./slime.xpm
 F    220,100,0

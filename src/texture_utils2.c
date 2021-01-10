@@ -12,138 +12,127 @@
 
 #include "cub3d.h"
 
-int get_calc_index2(int x, int y, t_img *img)
+void	set_color2(unsigned char *dp, unsigned char *color)
 {
-    int index;
+	int i;
 
-    index = 0;
-    index = (y) * img->size_line;
-    index = index + (x * (img->bpp / 8));
-    return (index);
+	i = 4;
+	while (i--)
+		*(dp + i) = *(color + i);
 }
 
-void set_color2(unsigned char *dp, unsigned char *color)
+t_img	*dl_tex(int x, int y, t_ray ray, int index)
 {
-    int i;
+	double	mx;
+	double	my;
+	double	kx;
+	double	ky;
+	t_img	*tex;
 
-    i = 4;
-    while (i--)
-        *(dp + i) = *(color + i);
+	mx = fmod(ray.hit.x, tile_size);
+	my = fmod(ray.hit.y, tile_size);
+	if (mx == 0)
+	{
+		tex = texture.we;
+		ky = tex->height / p2.y;
+		kx = tex->width / tile_size;
+		ft_memmove(&game.img2->data[index],
+&tex->data[get_calc_index2(tex->width - my * kx, (y + (x - x)) * ky, tex)], 4);
+	}
+	else if (my == 0)
+	{
+		tex = texture.so;
+		ky = tex->height / p2.y;
+		kx = tex->width / tile_size;
+		ft_memmove(&game.img2->data[index],
+&tex->data[get_calc_index2(tex->width - mx * kx, y * ky, tex)], 4);
+	}
+	return (0);
 }
 
-t_img *dl_tex(int x, int y, t_ray ray, int index)
+t_img	*dr_tex(int x, int y, t_ray ray, int index)
 {
-    double mx;
-    double my;
-    double kx;
-    double ky;
-    t_img *tex;
+	double	mx;
+	double	my;
+	double	kx;
+	double	ky;
+	t_img	*tex;
 
-    mx = fmod(ray.hit.x, tile_size);
-    my = fmod(ray.hit.y, tile_size);
-    if (mx == 0)
-    {
-        tex = texture.we;
-        ky = tex->height / p2.y;
-        kx = tex->width / tile_size;
-        ft_memmove(&game.img2->data[index], &tex->data[get_calc_index2(tex->width - my * kx, (y + (x-x)) * ky, tex)], 4);
-        ////set_color2((unsigned char*)&game.img2->data[index], (unsigned char *)&tex->data[get_calc_index2(x * kx, y * ky, tex)]);
-    }
-    else if (my == 0)
-    {
-        tex = texture.so;
-        ky = tex->height / p2.y;
-        kx = tex->width / tile_size;
-        ft_memmove(&game.img2->data[index], &tex->data[get_calc_index2(tex->width - mx * kx, y * ky, tex)], 4);
-        //set_color2((unsigned char*)&game.img2->data[index], (unsigned char *)&tex->data[get_calc_index2(x * kx, y * ky, tex)]);
-    }
-    return (0);
+	mx = fmod(ray.hit.x, tile_size);
+	my = fmod(ray.hit.y, tile_size);
+	if (mx == 0)
+	{
+		tex = texture.ea;
+		ky = tex->height / p2.y;
+		kx = tex->width / tile_size;
+		ft_memmove(&game.img2->data[index],
+&tex->data[get_calc_index2(my * kx, (y + (x - x)) * ky, tex)], 4);
+	}
+	else if (my == 0)
+	{
+		tex = texture.so;
+		ky = tex->height / p2.y;
+		kx = tex->width / tile_size;
+		ft_memmove(&game.img2->data[index],
+&tex->data[get_calc_index2(tex->width - mx * kx, y * ky, tex)], 4);
+	}
+	return (0);
 }
 
-t_img *dr_tex(int x, int y, t_ray ray, int index)
+t_img	*ul_tex(int x, int y, t_ray ray, int index)
 {
-    double mx;
-    double my;
-    double kx;
-    double ky;
-    t_img *tex;
+	double	mx;
+	double	my;
+	double	kx;
+	double	ky;
+	t_img	*tex;
 
-    mx = fmod(ray.hit.x, tile_size);
-    my = fmod(ray.hit.y, tile_size);
-    if (mx == 0)
-    {
-        tex = texture.ea;
-        ky = tex->height / p2.y;
-        kx = tex->width / tile_size;
-        ft_memmove(&game.img2->data[index], &tex->data[get_calc_index2(my * kx, (y + (x - x)) * ky, tex)], 4);
-        //set_color2((unsigned char*)&game.img2->data[index], (unsigned char *)&tex->data[get_calc_index2(x * kx, y * ky, tex)]);
-    }
-    else if (my == 0)
-    {
-        tex = texture.so;
-        ky = tex->height / p2.y;
-        kx = tex->width / tile_size;
-        ft_memmove(&game.img2->data[index], &tex->data[get_calc_index2(tex->width - mx * kx, y * ky, tex)], 4);
-        //set_color2((unsigned char*)&game.img2->data[index], (unsigned char *)&tex->data[get_calc_index2(x * kx, y * ky, tex)]);
-    }
-    return (0);
+	mx = fmod(ray.hit.x, tile_size);
+	my = fmod(ray.hit.y, tile_size);
+	if (my == 0)
+	{
+		tex = texture.no;
+		ky = tex->height / p2.y;
+		kx = tex->width / tile_size;
+		ft_memmove(&game.img2->data[index],
+&tex->data[get_calc_index2(mx * kx, y * ky, tex)], 4);
+	}
+	else if (mx == 0)
+	{
+		tex = texture.we;
+		ky = tex->height / p2.y;
+		kx = tex->width / tile_size;
+		ft_memmove(&game.img2->data[index],
+&tex->data[get_calc_index2(tex->width - my * kx, (y + (x - x)) * ky, tex)], 4);
+	}
+	return (0);
 }
 
-t_img *ul_tex(int x, int y, t_ray ray, int index)
+t_img	*ur_tex(int x, int y, t_ray ray, int index)
 {
-    double mx;
-    double my;
-    double kx;
-    double ky;
-    t_img *tex;
+	double	mx;
+	double	my;
+	double	kx;
+	double	ky;
+	t_img	*tex;
 
-    mx = fmod(ray.hit.x, tile_size);
-    my = fmod(ray.hit.y, tile_size);
-    if (my == 0)
-    {
-        tex = texture.no;
-        ky = tex->height / p2.y;
-        kx = tex->width / tile_size;
-        ft_memmove(&game.img2->data[index], &tex->data[get_calc_index2(mx * kx, y * ky, tex)], 4);
-        //set_color2((unsigned char*)&game.img2->data[index], (unsigned char *)&tex->data[get_calc_index2(x * kx, y * ky, tex)]);
-    }
-    else if (mx == 0)
-    {
-        tex = texture.we;
-        ky = tex->height / p2.y;
-        kx = tex->width / tile_size;
-        ft_memmove(&game.img2->data[index], &tex->data[get_calc_index2(tex->width - my * kx, (y + (x-x)) * ky, tex)], 4);
-        //set_color2((unsigned char*)&game.img2->data[index], (unsigned char *)&tex->data[get_calc_index2(x * kx, y * ky, tex)]);
-    }
-    
-    return (0);
-}
-
-t_img *ur_tex(int x, int y, t_ray ray, int index)
-{
-    double mx;
-    double my;
-    double kx;
-    double ky;
-    t_img *tex;
-
-    mx = fmod(ray.hit.x, tile_size);
-    my = fmod(ray.hit.y, tile_size);
-    if (my == 0)
-    {
-        tex = texture.no;
-        ky = tex->height / p2.y;
-        kx = tex->width / tile_size;
-        ft_memmove(&game.img2->data[index], &tex->data[get_calc_index2(mx * kx, y * ky, tex)], 4);
-        //set_color2((unsigned char*)&game.img2->data[index], (unsigned char *)&tex->data[get_calc_index2(x * kx, y * ky, tex)]);
-    }
-    else if (mx == 0)
-    {
-        tex = texture.ea;
-        ky = tex->height / p2.y;
-        kx = tex->width / tile_size;
-        ft_memmove(&game.img2->data[index], &tex->data[get_calc_index2(my * kx, (y + (x-x)) * ky, tex)], 4);
-        //set_color2((unsigned char*)&game.img2->data[index], (unsigned char *)&tex->data[get_calc_index2(x * kx, y * ky, tex)]);
-    }
-    return (0);
+	mx = fmod(ray.hit.x, tile_size);
+	my = fmod(ray.hit.y, tile_size);
+	if (my == 0)
+	{
+		tex = texture.no;
+		ky = tex->height / p2.y;
+		kx = tex->width / tile_size;
+		ft_memmove(&game.img2->data[index],
+&tex->data[get_calc_index2(mx * kx, y * ky, tex)], 4);
+	}
+	else if (mx == 0)
+	{
+		tex = texture.ea;
+		ky = tex->height / p2.y;
+		kx = tex->width / tile_size;
+		ft_memmove(&game.img2->data[index],
+&tex->data[get_calc_index2(my * kx, (y + (x - x)) * ky, tex)], 4);
+	}
+	return (0);
 }

@@ -70,7 +70,6 @@ int		parse_data(int fd)
 	line = 0;
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
-		printf("%s\n", line);
 		if (set_data(line) == -1)
 		{
 			free_buffer(&line);

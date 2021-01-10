@@ -167,4 +167,7 @@ void set_distance(t_list *sp_list);
 void test(t_list *sp_list);
 double atan_angle(double angle);
 int get_calc_index2(int x, int y, t_img *img);
+int window_close();
+void make_header(int fd, int width, int height);
+void write_data(int fd, int width, int height);
 #endif

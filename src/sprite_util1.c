@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int		check_sp_list(t_list *tmp, t_ray ray)
+int			check_sp_list(t_list *tmp, t_ray ray)
 {
 	int		x;
 	int		y;
@@ -30,13 +30,13 @@ int		check_sp_list(t_list *tmp, t_ray ray)
 	return (1);
 }
 
-void	make_sp_list(t_list **sp_list)
+void		make_sp_list(t_list **sp_list)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-    while (i < num_rays)
-    {
+	while (i < num_rays)
+	{
 		if (sp_rays[i].hit_tf == true && sp_rays[i].distance < rays[i].distance)
 		{
 			if (check_sp_list(*sp_list, sp_rays[i]) == 1)
@@ -46,11 +46,11 @@ void	make_sp_list(t_list **sp_list)
 				ft_lstadd_back(sp_list, ft_lstnew((void *)&sp_rays[i]));
 			}
 		}
-        i++;
-    }
+		i++;
+	}
 }
 
-void	sort_list(t_list **sp_list)
+void		sort_list(t_list **sp_list)
 {
 	int		count;
 	void	*swap;
@@ -78,9 +78,10 @@ void	sort_list(t_list **sp_list)
 	}
 }
 
-void	draw_sprite()
+void		draw_sprite(void)
 {
-	t_list *sp_list;
+	t_list	*sp_list;
+	t_list	*tmp;
 
 	sp_list = 0x00;
 	make_sp_list(&sp_list);
@@ -88,4 +89,10 @@ void	draw_sprite()
 		sort_list(&sp_list);
 	set_distance(sp_list);
 	test(sp_list);
+	while (sp_list)
+	{
+		tmp = sp_list;
+		sp_list = sp_list->next;
+		free(tmp);
+	}
 }
