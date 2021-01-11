@@ -14,28 +14,29 @@
 
 int		texture_check(void)
 {
-	if (!(texture.ea = (t_img *)mlx_xpm_file_to_image(game.mlx,
-					md.east, &texture.ea_w, &texture.ea_h)))
+	if (!(g_texture.ea = (t_img *)mlx_xpm_file_to_image(g_game.mlx,
+					g_md.east, &g_texture.ea_w, &g_texture.ea_h)))
 		return (-1);
-	if (!(texture.no = (t_img *)mlx_xpm_file_to_image(game.mlx,
-					md.north, &texture.no_w, &texture.no_h)))
+	if (!(g_texture.no = (t_img *)mlx_xpm_file_to_image(g_game.mlx,
+					g_md.north, &g_texture.no_w, &g_texture.no_h)))
 		return (-1);
-	if (!(texture.we = (t_img *)mlx_xpm_file_to_image(game.mlx,
-					md.west, &texture.we_w, &texture.we_h)))
+	if (!(g_texture.we = (t_img *)mlx_xpm_file_to_image(g_game.mlx,
+					g_md.west, &g_texture.we_w, &g_texture.we_h)))
 		return (-1);
-	if (!(texture.so = (t_img *)mlx_xpm_file_to_image(game.mlx,
-					md.south, &texture.so_w, &texture.so_h)))
+	if (!(g_texture.so = (t_img *)mlx_xpm_file_to_image(g_game.mlx,
+					g_md.south, &g_texture.so_w, &g_texture.so_h)))
 		return (-1);
-	if (!(texture.item = (t_img *)mlx_xpm_file_to_image(game.mlx,
-					md.sprite, &texture.so_w, &texture.so_h)))
+	if (!(g_texture.item = (t_img *)mlx_xpm_file_to_image(g_game.mlx,
+					g_md.sprite, &g_texture.so_w, &g_texture.so_h)))
 		return (-1);
 	return (1);
 }
 
 int		check_complete(void)
 {
-	if (md.width != 0 && md.height != 0 && md.north != 0 && md.south != 0
-	&& md.west != 0 && md.east != 0 && md.sprite != 0 && md.f != 0 && md.c != 0)
+	if (g_md.width != 0 && g_md.height != 0 && g_md.north != 0
+	&& g_md.south != 0 && g_md.west != 0 && g_md.east != 0 &&
+		g_md.sprite != 0 && g_md.f != 0 && g_md.c != 0)
 		return (1);
 	return (-1);
 }
@@ -92,18 +93,18 @@ int		cub_parse(int fd)
 	t_list	*lst;
 
 	lst = 0;
-	if (!(game.mlx = mlx_init()))
+	if (!(g_game.mlx = mlx_init()))
 		return (-1);
-	if (!(game.mlx2 = mlx_init()))
+	if (!(g_game.mlx2 = mlx_init()))
 		return (-1);
 	if (parse_data(fd) == -1)
 		return (-1);
 	if (jump_to_map(fd, &lst) == -1)
 		return (-1);
-	if ((game.map = map_valid_test(lst)) == 0)
+	if ((g_game.map = map_valid_test(lst)) == 0)
 		return (-1);
-	w_tile = (md.width / map_width);
-	h_tile = (md.height / map_height);
-	tile_size = (w_tile < h_tile) ? w_tile : h_tile;
+	w_tile = (g_md.width / g_map_width);
+	h_tile = (g_md.height / g_map_height);
+	g_tile_size = (w_tile < h_tile) ? w_tile : h_tile;
 	return (0);
 }

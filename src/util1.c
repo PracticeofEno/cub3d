@@ -19,19 +19,19 @@ char	**get_img_data(int width, int height)
 	char	**tmp;
 
 	i = 0;
-	size = height * tile_size;
-	if (!(tmp = (char**)malloc((height * tile_size) * sizeof(char*))))
+	size = height * g_tile_size;
+	if (!(tmp = (char**)malloc((height * g_tile_size) * sizeof(char*))))
 		return (0);
 	while (i < size)
 	{
-		if (!(tmp[i] = (char*)malloc(sizeof(char) * width * tile_size)))
+		if (!(tmp[i] = (char*)malloc(sizeof(char) * width * g_tile_size)))
 			return (0);
 		i++;
 	}
 	return (tmp);
 }
 
-void	parse_map(int fd, t_list **lst)
+void	parse_g_map(int fd, t_list **lst)
 {
 	int		i;
 	char	*line;
@@ -62,7 +62,7 @@ int		jump_to_map(int fd, t_list **lst)
 	if (tf == false)
 		return (-1);
 	ft_lstadd_back(lst, ft_lstnew((void *)line));
-	parse_map(fd, lst);
+	parse_g_map(fd, lst);
 	return (1);
 }
 

@@ -16,7 +16,7 @@ int		up_test(int i, int j)
 {
 	while (i >= 0)
 	{
-		if (map[i][j] == '1')
+		if (g_map[i][j] == '1')
 			return (0);
 		i--;
 	}
@@ -27,7 +27,7 @@ int		down_test(int i, int j, int height)
 {
 	while (i < height)
 	{
-		if (map[i][j] == '1')
+		if (g_map[i][j] == '1')
 			return (0);
 		i++;
 	}
@@ -38,7 +38,7 @@ int		left_test(int i, int j)
 {
 	while (j >= 0)
 	{
-		if (map[i][j] == '1')
+		if (g_map[i][j] == '1')
 			return (0);
 		j--;
 	}
@@ -49,7 +49,7 @@ int		right_test(int i, int j, int width)
 {
 	while (j <= width)
 	{
-		if (map[i][j] == '1')
+		if (g_map[i][j] == '1')
 			return (0);
 		j++;
 	}

@@ -37,7 +37,7 @@ void	make_header(int fd, int width, int height)
 	tmp = (unsigned int *)&header[26];
 	*tmp = 1;
 	tmp = (unsigned int *)&header[28];
-	*tmp = game.img2->bpp;
+	*tmp = g_game.img2->bpp;
 	write(fd, header, 54);
 }
 
@@ -52,7 +52,8 @@ void	write_data(int fd, int width, int height)
 		x = 0;
 		while (x < width)
 		{
-			write(fd, &game.img2->data[get_calc_index2(x, y, game.img2)], 4);
+			write(fd, &g_game.img2->data[get_calc_index2(x, y, g_game.img2)],
+				4);
 			x++;
 		}
 		y--;

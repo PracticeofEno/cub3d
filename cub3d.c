@@ -18,12 +18,12 @@ void	save_bmp(void)
 
 	update();
 	render();
-	mlx_put_image_to_window(game.mlx, game.win, game.img, 0, 0);
-	mlx_put_image_to_window(game.mlx, game.win2, game.img2, 0, 0);
+	mlx_put_image_to_window(g_game.mlx, g_game.win, g_game.img, 0, 0);
+	mlx_put_image_to_window(g_game.mlx, g_game.win2, g_game.img2, 0, 0);
 	if (!(fd = open("save.bmp", O_WRONLY | O_CREAT | O_TRUNC)))
 		exit(1);
-	make_header(fd, game.img2->width, game.img2->height);
-	write_data(fd, game.img2->width, game.img2->height);
+	make_header(fd, g_game.img2->width, g_game.img2->height);
+	write_data(fd, g_game.img2->width, g_game.img2->height);
 	close(fd);
 }
 
@@ -86,8 +86,8 @@ int		main(int argc, char **argv)
 	else if (argc == 2)
 	{
 		check_save(argv[1]);
-		mlx_loop_hook(game.mlx, cub3d_start, 0);
-		mlx_loop(game.mlx);
+		mlx_loop_hook(g_game.mlx, cub3d_start, 0);
+		mlx_loop(g_game.mlx);
 	}
 	return (0);
 }

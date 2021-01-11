@@ -16,8 +16,8 @@ int		cub3d_start(void)
 {
 	update();
 	render();
-	mlx_put_image_to_window(game.mlx, game.win, game.img, 0, 0);
-	mlx_put_image_to_window(game.mlx, game.win2, game.img2, 0, 0);
+	mlx_put_image_to_window(g_game.mlx, g_game.win, g_game.img, 0, 0);
+	mlx_put_image_to_window(g_game.mlx, g_game.win2, g_game.img2, 0, 0);
 	return (0);
 }
 
@@ -26,13 +26,13 @@ int		is_sprite(int x, int y)
 	int x1;
 	int y1;
 
-	if (x < 0 || x > map_width * tile_size)
+	if (x < 0 || x > g_map_width * g_tile_size)
 		return (1);
-	if (y < 0 || y > map_height * tile_size)
+	if (y < 0 || y > g_map_height * g_tile_size)
 		return (1);
-	x1 = floor(x / tile_size);
-	y1 = floor(y / tile_size);
-	if (map[y1][x1] == '2')
+	x1 = floor(x / g_tile_size);
+	y1 = floor(y / g_tile_size);
+	if (g_map[y1][x1] == '2')
 		return (1);
 	else
 		return (0);

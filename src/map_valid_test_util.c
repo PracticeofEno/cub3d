@@ -28,7 +28,7 @@ static int			get_content_width(char *str)
 	return (i);
 }
 
-static int			get_map_width(t_list *lst)
+static int			get_g_map_width(t_list *lst)
 {
 	int max;
 	int size;
@@ -47,7 +47,7 @@ static int			get_map_width(t_list *lst)
 	return (max);
 }
 
-static int			get_map_height(t_list *lst)
+static int			get_g_map_height(t_list *lst)
 {
 	int i;
 
@@ -67,22 +67,22 @@ char				**map_valid_test(t_list *lst)
 	int	i;
 
 	i = 0;
-	map_width = get_map_width(lst);
-	map_height = get_map_height(lst);
-	if (map_width == -1 && map_height == -1)
+	g_map_width = get_g_map_width(lst);
+	g_map_height = get_g_map_height(lst);
+	if (g_map_width == -1 && g_map_height == -1)
 		return (0);
-	if (!(map = (char**)malloc(sizeof(char *) * map_height)))
+	if (!(g_map = (char**)malloc(sizeof(char *) * g_map_height)))
 		return (0);
-	while (i < map_height)
+	while (i < g_map_height)
 	{
-		if (!(map[i] = (char*)malloc(sizeof(char) * map_width)))
+		if (!(g_map[i] = (char*)malloc(sizeof(char) * g_map_width)))
 			return (0);
 		i++;
 	}
-	copy_map(map, lst);
-	if (check_valid_map(map_width, map_height) == -1)
+	copy_map(g_map, lst);
+	if (check_valid_map(g_map_width, g_map_height) == -1)
 		return (0);
-	return (map);
+	return (g_map);
 }
 
 int					is_wall(int x, int y)
@@ -90,15 +90,15 @@ int					is_wall(int x, int y)
 	int x1;
 	int y1;
 
-	if (x < 0 || x > map_width * tile_size)
+	if (x < 0 || x > g_map_width * g_tile_size)
 		return (1);
-	if (y < 0 || y > map_height * tile_size)
+	if (y < 0 || y > g_map_height * g_tile_size)
 		return (1);
-	x1 = floor(x / tile_size);
-	y1 = floor(y / tile_size);
-	if (map[y1][x1] == '1')
+	x1 = floor(x / g_tile_size);
+	y1 = floor(y / g_tile_size);
+	if (g_map[y1][x1] == '1')
 		return (1);
-	else if (map[y1][x1] == '2')
+	else if (g_map[y1][x1] == '2')
 		return (2);
 	else
 		return (0);

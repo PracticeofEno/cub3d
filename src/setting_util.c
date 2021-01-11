@@ -14,31 +14,31 @@
 
 int		mlx_setting(void)
 {
-	if (!(game.win = mlx_new_window(game.mlx,
-		map_width * tile_size, map_height * tile_size, "2d map")))
+	if (!(g_game.win = mlx_new_window(g_game.mlx,
+		g_map_width * g_tile_size, g_map_height * g_tile_size, "2d g_map")))
 		return (-1);
-	if (!(game.img = (t_img *)mlx_new_image(game.mlx,
-		map_width * tile_size, map_height * tile_size)))
+	if (!(g_game.img = (t_img *)mlx_new_image(g_game.mlx,
+		g_map_width * g_tile_size, g_map_height * g_tile_size)))
 		return (-1);
-	if (!(game.win2 = mlx_new_window(game.mlx2,
-		map_width * tile_size, map_height * tile_size, "3d")))
+	if (!(g_game.win2 = mlx_new_window(g_game.mlx2,
+		g_map_width * g_tile_size, g_map_height * g_tile_size, "3d")))
 		return (-1);
-	if (!(game.img2 = (t_img *)mlx_new_image(game.mlx2,
-		map_width * tile_size, map_height * tile_size)))
+	if (!(g_game.img2 = (t_img *)mlx_new_image(g_game.mlx2,
+		g_map_width * g_tile_size, g_map_height * g_tile_size)))
 		return (-1);
-	mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, 0);
-	mlx_hook(game.win, KeyRelease, KeyReleaseMask, key_released, 0);
-	mlx_hook(game.win, ClientMessage, DestroyNotify, window_close, 0);
+	mlx_hook(g_game.win, KeyPress, KeyPressMask, key_pressed, 0);
+	mlx_hook(g_game.win, KeyRelease, KeyReleaseMask, key_released, 0);
+	mlx_hook(g_game.win, ClientMessage, DestroyNotify, window_close, 0);
 	return (0);
 }
 
-void	player_init(void)
+void	g_player_init(void)
 {
-	player.radius = 3;
-	player.turn_direction = 0;
-	player.walk_direction = 0;
-	player.move_speed = 2;
-	player.rotation_speed = 2 * (PI / 180);
+	g_player.radius = 3;
+	g_player.turn_direction = 0;
+	g_player.walk_direction = 0;
+	g_player.move_speed = 2;
+	g_player.rotation_speed = 2 * (PI / 180);
 }
 
 void	player_setting(void)
@@ -47,23 +47,23 @@ void	player_setting(void)
 	int j;
 
 	i = 0;
-	while (i < map_height)
+	while (i < g_map_height)
 	{
 		j = 0;
-		while (j < map_width)
+		while (j < g_map_width)
 		{
-			if (game.map[i][j] == 'N' || game.map[i][j] == 'W' ||
-				game.map[i][j] == 'E' || game.map[i][j] == 'S')
+			if (g_game.map[i][j] == 'N' || g_game.map[i][j] == 'W' ||
+				g_game.map[i][j] == 'E' || g_game.map[i][j] == 'S')
 			{
-				player.x = (j * tile_size);
-				player.y = (i * tile_size);
-				set_angle(game.map[i][j]);
+				g_player.x = (j * g_tile_size);
+				g_player.y = (i * g_tile_size);
+				set_angle(g_game.map[i][j]);
 			}
 			j++;
 		}
 		i++;
 	}
-	player_init();
+	g_player_init();
 }
 
 void	*temp(void *p)

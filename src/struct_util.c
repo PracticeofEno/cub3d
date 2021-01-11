@@ -14,17 +14,17 @@
 
 double		d2r(void)
 {
-	return (player.rotation_angle * (PI / 180.0));
+	return (g_player.rotation_angle * (PI / 180.0));
 }
 
 void		default_setting(void)
 {
-	fov_angle = 60 * (PI / 180);
-	wall_strip_width = 1;
-	num_rays = (map_width * tile_size) / wall_strip_width;
-	rays = (t_ray *)malloc((num_rays) * sizeof(t_ray));
-	sp_rays = (t_ray *)malloc((num_rays) * sizeof(t_ray));
-	if (rays == 0 || sp_rays == 0)
+	g_fov_angle = 60 * (PI / 180);
+	g_wall_strip_width = 1;
+	g_num_rays = (g_map_width * g_tile_size) / g_wall_strip_width;
+	g_rays = (t_ray *)malloc((g_num_rays) * sizeof(t_ray));
+	g_sp_rays = (t_ray *)malloc((g_num_rays) * sizeof(t_ray));
+	if (g_rays == 0 || g_sp_rays == 0)
 		exit(1);
 }
 
@@ -37,7 +37,7 @@ int			setting(void)
 	}
 	if (texture_check() == -1)
 	{
-		ft_putstr("texture error");
+		ft_putstr("g_texture error");
 		return (-1);
 	}
 	player_setting();
@@ -53,7 +53,7 @@ void		update(void)
 void		render(void)
 {
 	reset_img();
-	mlx_put_image_to_window(game.mlx, game.win2, game.img2, 0, 0);
+	mlx_put_image_to_window(g_game.mlx, g_game.win2, g_game.img2, 0, 0);
 	update();
 	draw_2d_map();
 	player_render();

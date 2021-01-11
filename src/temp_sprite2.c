@@ -19,8 +19,8 @@ static	void	calc_h_ray_s(t_point interc, t_point step, t_point *hp)
 	next_h_p.x = interc.x;
 	next_h_p.y = interc.y;
 	hp->sprite_hit = false;
-	while (next_h_p.x >= 0 && next_h_p.x < (map_width * tile_size)
-			&& next_h_p.y >= 0 && next_h_p.y < (map_height * tile_size))
+	while (next_h_p.x >= 0 && next_h_p.x < (g_map_width * g_tile_size)
+			&& next_h_p.y >= 0 && next_h_p.y < (g_map_height * g_tile_size))
 	{
 		if (is_wall(next_h_p.x, next_h_p.y) == 2)
 		{
@@ -47,14 +47,14 @@ static void		horizontal_check_s(t_point *hit_point, double angle)
 	angle = normalize_angle(angle);
 	rfd = angle > 0 && angle < PI;
 	rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
-	intercept.y = floor(player.y / tile_size) * tile_size;
+	intercept.y = floor(g_player.y / g_tile_size) * g_tile_size;
 	if (rfd)
-		intercept.y += tile_size;
-	intercept.x = player.x + (intercept.y - player.y) / tan(angle);
-	step.y = tile_size;
+		intercept.y += g_tile_size;
+	intercept.x = g_player.x + (intercept.y - g_player.y) / tan(angle);
+	step.y = g_tile_size;
 	if (!(rfd))
 		step.y = step.y * -1;
-	step.x = tile_size / tan(angle);
+	step.x = g_tile_size / tan(angle);
 	if (!(rfr) && step.x > 0)
 		step.x = step.x * -1;
 	if ((rfr) && step.x < 0)
@@ -69,8 +69,8 @@ static void		calc_v_ray_s(t_point interc, t_point step, t_point *hp)
 	next_h_p.x = interc.x;
 	next_h_p.y = interc.y;
 	hp->sprite_hit = false;
-	while (next_h_p.x >= 0 && next_h_p.x < (map_width * tile_size)
-			&& next_h_p.y >= 0 && next_h_p.y < (map_height * tile_size))
+	while (next_h_p.x >= 0 && next_h_p.x < (g_map_width * g_tile_size)
+			&& next_h_p.y >= 0 && next_h_p.y < (g_map_height * g_tile_size))
 	{
 		if (is_wall(next_h_p.x, next_h_p.y) == 2)
 		{
@@ -97,14 +97,14 @@ static void		vertical_check_s(t_point *hit_point, double angle)
 	angle = normalize_angle(angle);
 	rfd = angle > 0 && angle < PI;
 	rfr = (angle < 0.5 * PI || angle > 1.5 * PI);
-	intercept.x = floor(player.x / tile_size) * tile_size;
+	intercept.x = floor(g_player.x / g_tile_size) * g_tile_size;
 	if (rfr)
-		intercept.x += tile_size;
-	intercept.y = player.y + (intercept.x - player.x) * tan(angle);
-	step.x = tile_size;
+		intercept.x += g_tile_size;
+	intercept.y = g_player.y + (intercept.x - g_player.x) * tan(angle);
+	step.x = g_tile_size;
 	if (!(rfr))
 		step.x = step.x * -1;
-	step.y = tile_size * tan(angle);
+	step.y = g_tile_size * tan(angle);
 	if (!(rfd) && step.y > 0)
 		step.y = step.y * -1;
 	if ((rfd) && step.y < 0)
@@ -123,11 +123,11 @@ void			cast_ray_sprite(double angle, int col_id)
 	horizontal_check_s(&h_hit, angle);
 	vertical_check_s(&v_hit, angle);
 	if (h_hit.sprite_hit == true)
-		h_dis = get_distance(player.x, player.y, h_hit.x, h_hit.y);
+		h_dis = get_distance(g_player.x, g_player.y, h_hit.x, h_hit.y);
 	else
 		h_dis = 999999999;
 	if (v_hit.sprite_hit == true)
-		v_dis = get_distance(player.x, player.y, v_hit.x, v_hit.y);
+		v_dis = get_distance(g_player.x, g_player.y, v_hit.x, v_hit.y);
 	else
 		v_dis = 999999999;
 	if (h_dis < v_dis)

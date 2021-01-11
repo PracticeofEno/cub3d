@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void		draw_rect(t_game *game, int x, int y, int size)
+void		draw_rect(t_game *g_game, int x, int y, int size)
 {
 	int i;
 	int j;
@@ -28,7 +28,7 @@ void		draw_rect(t_game *game, int x, int y, int size)
 		while (j < size)
 		{
 			x_index = get_calc_index(j, 0);
-			set_color((unsigned char *)&game->img->data[index + x_index],
+			set_color((unsigned char *)&g_game->img->data[index + x_index],
 			0xFFFFFF);
 			j++;
 		}
@@ -52,18 +52,19 @@ void		draw_rect2(int x, int y, int size, int color)
 		while (j < size)
 		{
 			x_index = get_calc_index(j, 0);
-			set_color((unsigned char *)&game.img->data[index + x_index], color);
+			set_color((unsigned char *)&g_game.img->data[index + x_index],
+				color);
 			j++;
 		}
 		i++;
 	}
 }
 
-void		draw_cols(t_point p1, t_point p2, t_ray ray)
+void		draw_cols(t_point g_p1, t_point g_p2, t_ray ray)
 {
-	draw_sky(p1, p2);
-	draw_texture(p1, p2, ray);
-	draw_land(p1, p2);
+	draw_sky(g_p1, g_p2);
+	draw_texture(g_p1, g_p2, ray);
+	draw_land(g_p1, g_p2);
 }
 
 void		draw_2d_map(void)
@@ -74,21 +75,21 @@ void		draw_2d_map(void)
 	int location_y;
 
 	i = 0;
-	while (i < map_height)
+	while (i < g_map_height)
 	{
 		j = 0;
-		while (j < map_width)
+		while (j < g_map_width)
 		{
-			location_x = j * tile_size;
-			location_y = i * tile_size;
-			if (map[i][j] == '1')
-				draw_rect(&game, location_x, location_y, tile_size);
-			else if (map[i][j] == '2')
+			location_x = j * g_tile_size;
+			location_y = i * g_tile_size;
+			if (g_map[i][j] == '1')
+				draw_rect(&g_game, location_x, location_y, g_tile_size);
+			else if (g_map[i][j] == '2')
 				draw_rect2(location_x, location_y,
-				tile_size, get_color(255, 0, 0));
+				g_tile_size, get_color(255, 0, 0));
 			else
 				draw_rect2(location_x, location_y,
-				tile_size, get_color(0, 0, 0));
+				g_tile_size, get_color(0, 0, 0));
 			j++;
 		}
 		i++;
@@ -103,12 +104,12 @@ void		calc_ray(void)
 
 	col_id = 0;
 	i = 0;
-	ray_angle = player.rotation_angle - (fov_angle / 2);
-	while (i < num_rays)
+	ray_angle = g_player.rotation_angle - (g_fov_angle / 2);
+	while (i < g_num_rays)
 	{
-		rays[i].angle = normalize_angle(ray_angle);
+		g_rays[i].angle = normalize_angle(ray_angle);
 		cast_ray(ray_angle, col_id);
-		ray_angle = ray_angle + (fov_angle / num_rays);
+		ray_angle = ray_angle + (g_fov_angle / g_num_rays);
 		i++;
 		col_id++;
 	}

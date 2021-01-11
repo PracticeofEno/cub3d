@@ -19,15 +19,15 @@ void	reset_img(void)
 	int width;
 	int height;
 
-	width = map_width * tile_size;
-	height = map_height * tile_size;
+	width = g_map_width * g_tile_size;
+	height = g_map_height * g_tile_size;
 	i = 0;
 	while (i < height)
 	{
 		j = 0;
 		while (j < width)
 		{
-			set_color((unsigned char *)&game.img2->data[get_calc_index(j, i)],
+			set_color((unsigned char *)&g_game.img2->data[get_calc_index(j, i)],
 				get_color(0, 0, 0));
 			j++;
 		}
@@ -40,10 +40,10 @@ void	draw_2d_ray(void)
 	int i;
 
 	i = 0;
-	while (i < num_rays)
+	while (i < g_num_rays)
 	{
-		set_t_point(player.x, player.y, rays[i].hit.x, rays[i].hit.y);
-		draw_line(game, &p1, &p2, get_color(0, 255, 0));
+		set_t_point(g_player.x, g_player.y, g_rays[i].hit.x, g_rays[i].hit.y);
+		draw_line(g_game, &g_p1, &g_p2, get_color(0, 255, 0));
 		i++;
 	}
 }
@@ -56,37 +56,39 @@ void	draw_3d_ray(void)
 	double	wall_strip_height;
 
 	i = 0;
-	while (i < num_rays)
+	while (i < g_num_rays)
 	{
-		distance = rays[i].distance *
-			cos(rays[i].angle - player.rotation_angle);
-		dis_projection = ((map_width * tile_size) / 2) / tan(fov_angle / 2);
-		wall_strip_height = (tile_size / distance) * dis_projection;
-		p1.x = i * wall_strip_width;
-		p1.y = ((double)(map_height * tile_size) / 2) - (wall_strip_height / 2);
-		if (p1.y < 0)
-			p1.y = 0;
-		p2.x = wall_strip_width;
-		p2.y = wall_strip_height;
-		if (p2.y > tile_size * map_height)
-			p2.y = tile_size * map_height;
-		draw_cols(p1, p2, rays[i]);
+		distance = g_rays[i].distance *
+			cos(g_rays[i].angle - g_player.rotation_angle);
+		dis_projection = ((g_map_width * g_tile_size) / 2)
+			/ tan(g_fov_angle / 2);
+		wall_strip_height = (g_tile_size / distance) * dis_projection;
+		g_p1.x = i * g_wall_strip_width;
+		g_p1.y = ((double)(g_map_height * g_tile_size) / 2)
+			- (wall_strip_height / 2);
+		if (g_p1.y < 0)
+			g_p1.y = 0;
+		g_p2.x = g_wall_strip_width;
+		g_p2.y = wall_strip_height;
+		if (g_p2.y > g_tile_size * g_map_height)
+			g_p2.y = g_tile_size * g_map_height;
+		draw_cols(g_p1, g_p2, g_rays[i]);
 		i++;
 	}
 }
 
 void	norminette_bypass(int col_id, t_point hit_p, double hit_dis, bool ht)
 {
-	rays[col_id].hit.x = hit_p.x;
-	rays[col_id].hit.y = hit_p.y;
-	rays[col_id].distance = hit_dis;
-	rays[col_id].hit_tf = ht;
+	g_rays[col_id].hit.x = hit_p.x;
+	g_rays[col_id].hit.y = hit_p.y;
+	g_rays[col_id].distance = hit_dis;
+	g_rays[col_id].hit_tf = ht;
 }
 
 void	norminette_bypass2(int col_id, t_point hit_p, double hit_dis, bool ht)
 {
-	sp_rays[col_id].hit.x = hit_p.x;
-	sp_rays[col_id].hit.y = hit_p.y;
-	sp_rays[col_id].distance = hit_dis;
-	sp_rays[col_id].hit_tf = ht;
+	g_sp_rays[col_id].hit.x = hit_p.x;
+	g_sp_rays[col_id].hit.y = hit_p.y;
+	g_sp_rays[col_id].distance = hit_dis;
+	g_sp_rays[col_id].hit_tf = ht;
 }

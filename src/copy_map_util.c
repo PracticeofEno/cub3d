@@ -24,8 +24,8 @@ int		check_valid_map(int width, int height)
 		j = 0;
 		while (j < width)
 		{
-			if (map[i][j] == '0' || map[i][j] == '2' || map[i][j] == 'W'
-			|| map[i][j] == 'E' || map[i][j] == 'N' || map[i][j] == 'S')
+			if (g_map[i][j] == '0' || g_map[i][j] == '2' || g_map[i][j] == 'W'
+			|| g_map[i][j] == 'E' || g_map[i][j] == 'N' || g_map[i][j] == 'S')
 				if (uni_test(i, j, width, height) == -1)
 					return (-1);
 			j++;
@@ -35,7 +35,7 @@ int		check_valid_map(int width, int height)
 	return (0);
 }
 
-void	copy_map(char **map, t_list *lst)
+void	copy_map(char **g_map, t_list *lst)
 {
 	int i;
 	int j;
@@ -48,7 +48,7 @@ void	copy_map(char **map, t_list *lst)
 		length = ft_strlen((char*)lst->content);
 		while (j < length)
 		{
-			map[i][j] = ((char *)lst->content)[j];
+			g_map[i][j] = ((char *)lst->content)[j];
 			j++;
 		}
 		i++;

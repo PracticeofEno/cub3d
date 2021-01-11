@@ -20,12 +20,12 @@ void	calc_ray_sprite(void)
 
 	col_id = 0;
 	i = 0;
-	ray_angle = player.rotation_angle - (fov_angle / 2);
-	while (i < num_rays)
+	ray_angle = g_player.rotation_angle - (g_fov_angle / 2);
+	while (i < g_num_rays)
 	{
-		sp_rays[i].angle = normalize_angle(ray_angle);
+		g_sp_rays[i].angle = normalize_angle(ray_angle);
 		cast_ray_sprite(ray_angle, col_id);
-		ray_angle = ray_angle + (fov_angle / num_rays);
+		ray_angle = ray_angle + (g_fov_angle / g_num_rays);
 		i++;
 		col_id++;
 	}

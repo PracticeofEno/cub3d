@@ -22,15 +22,15 @@ void	set_distance(t_list *sp_list)
 	while (tmp)
 	{
 		ray = ((t_ray *)(tmp->content));
-		ray->hit.x = (ray->hit.x * tile_size) + ((double)tile_size / 2);
-		ray->hit.y = (ray->hit.y * tile_size) + ((double)tile_size / 2);
-		ray->distance = get_distance(player.x, player.y,
+		ray->hit.x = (ray->hit.x * g_tile_size) + ((double)g_tile_size / 2);
+		ray->hit.y = (ray->hit.y * g_tile_size) + ((double)g_tile_size / 2);
+		ray->distance = get_distance(g_player.x, g_player.y,
 										ray->hit.x, ray->hit.y);
-		sprite_angle = normalize_angle(atan2(ray->hit.y - player.y,
-										ray->hit.x - player.x));
-		tmp->min_angle = (sprite_angle - atan2((double)tile_size / 2,
+		sprite_angle = normalize_angle(atan2(ray->hit.y - g_player.y,
+										ray->hit.x - g_player.x));
+		tmp->min_angle = (sprite_angle - atan2((double)g_tile_size / 2,
 										ray->distance));
-		tmp->max_angle = (sprite_angle + atan2((double)tile_size / 2,
+		tmp->max_angle = (sprite_angle + atan2((double)g_tile_size / 2,
 										ray->distance));
 		tmp = tmp->next;
 	}
@@ -44,21 +44,21 @@ int		check_black_color(int index, int y, t_ray ray, t_list *tmp)
 	double dy;
 	double wall_strip_height;
 
-	wall_strip_height = (tile_size / ((t_ray *)(tmp->content))->distance) *
-		(((map_width * tile_size) / 2) / tan(fov_angle / 2));
+	wall_strip_height = (g_tile_size / ((t_ray *)(tmp->content))->distance) *
+		(((g_map_width * g_tile_size) / 2) / tan(g_fov_angle / 2));
 	ix = ray.angle - tmp->min_angle;
 	iy = y;
-	dx = (texture.item->width / (tmp->max_angle - tmp->min_angle));
-	dy = (texture.item->height / wall_strip_height);
-	if ((texture.item->data[get_calc_index2((int)(ix * dx),
-							(int)(iy * dy), (texture.item))]) != 0)
-		ft_memmove(&game.img2->data[index],
-		&texture.item->data[get_calc_index2((int)(ix * dx), (int)(iy * dy),
-		(texture.item))], 4);
+	dx = (g_texture.item->width / (tmp->max_angle - tmp->min_angle));
+	dy = (g_texture.item->height / wall_strip_height);
+	if ((g_texture.item->data[get_calc_index2((int)(ix * dx),
+							(int)(iy * dy), (g_texture.item))]) != 0)
+		ft_memmove(&g_game.img2->data[index],
+		&g_texture.item->data[get_calc_index2((int)(ix * dx), (int)(iy * dy),
+		(g_texture.item))], 4);
 	return (0);
 }
 
-void	draw_item2(t_point p1, t_point p2, t_ray ray, t_list *tmp)
+void	draw_item2(t_point g_p1, t_point g_p2, t_ray ray, t_list *tmp)
 {
 	int i;
 	int j;
@@ -67,11 +67,11 @@ void	draw_item2(t_point p1, t_point p2, t_ray ray, t_list *tmp)
 
 	i = 0;
 	index = 0;
-	while (i < p2.y)
+	while (i < g_p2.y)
 	{
-		index = get_calc_index(p1.x, p1.y + i);
+		index = get_calc_index(g_p1.x, g_p1.y + i);
 		j = 0;
-		while (j < p2.x)
+		while (j < g_p2.x)
 		{
 			x_index = get_calc_index(j, 0);
 			check_black_color(index + x_index, i, ray, tmp);
@@ -86,17 +86,17 @@ void	draw_item(t_list *tmp, t_ray ray, int i)
 	double wsh;
 	double dis_proejction;
 
-	dis_proejction = ((map_width * tile_size) / 2) / tan(fov_angle / 2);
-	wsh = (tile_size / ((t_ray *)tmp->content)->distance) * dis_proejction;
-	p1.x = i * wall_strip_width;
-	p1.y = ((double)(map_height * tile_size) / 2) - (wsh / 2);
-	if (p1.y < 0)
-		p1.y = 0;
-	p2.x = wall_strip_width;
-	p2.y = wsh;
-	if (p2.y > tile_size * map_height)
-		p2.y = tile_size * map_height;
-	draw_item2(p1, p2, ray, tmp);
+	dis_proejction = ((g_map_width * g_tile_size) / 2) / tan(g_fov_angle / 2);
+	wsh = (g_tile_size / ((t_ray *)tmp->content)->distance) * dis_proejction;
+	g_p1.x = i * g_wall_strip_width;
+	g_p1.y = ((double)(g_map_height * g_tile_size) / 2) - (wsh / 2);
+	if (g_p1.y < 0)
+		g_p1.y = 0;
+	g_p2.x = g_wall_strip_width;
+	g_p2.y = wsh;
+	if (g_p2.y > g_tile_size * g_map_height)
+		g_p2.y = g_tile_size * g_map_height;
+	draw_item2(g_p1, g_p2, ray, tmp);
 }
 
 void	test(t_list *sp_list)
@@ -105,15 +105,15 @@ void	test(t_list *sp_list)
 	t_list	*tmp;
 
 	i = 0;
-	while (i < num_rays)
+	while (i < g_num_rays)
 	{
 		tmp = sp_list;
 		while (tmp)
 		{
-			if (tmp->min_angle <= sp_rays[i].angle
-				&& tmp->max_angle >= sp_rays[i].angle)
+			if (tmp->min_angle <= g_sp_rays[i].angle
+				&& tmp->max_angle >= g_sp_rays[i].angle)
 			{
-				draw_item(tmp, sp_rays[i], i);
+				draw_item(tmp, g_sp_rays[i], i);
 			}
 			tmp = tmp->next;
 		}

@@ -29,22 +29,22 @@ t_img	*dl_tex(int x, int y, t_ray ray, int index)
 	double	ky;
 	t_img	*tex;
 
-	mx = fmod(ray.hit.x, tile_size);
-	my = fmod(ray.hit.y, tile_size);
+	mx = fmod(ray.hit.x, g_tile_size);
+	my = fmod(ray.hit.y, g_tile_size);
 	if (mx == 0)
 	{
-		tex = texture.we;
-		ky = tex->height / p2.y;
-		kx = tex->width / tile_size;
-		ft_memmove(&game.img2->data[index],
+		tex = g_texture.we;
+		ky = tex->height / g_p2.y;
+		kx = tex->width / g_tile_size;
+		ft_memmove(&g_game.img2->data[index],
 &tex->data[get_calc_index2(tex->width - my * kx, (y + (x - x)) * ky, tex)], 4);
 	}
 	else if (my == 0)
 	{
-		tex = texture.so;
-		ky = tex->height / p2.y;
-		kx = tex->width / tile_size;
-		ft_memmove(&game.img2->data[index],
+		tex = g_texture.so;
+		ky = tex->height / g_p2.y;
+		kx = tex->width / g_tile_size;
+		ft_memmove(&g_game.img2->data[index],
 &tex->data[get_calc_index2(tex->width - mx * kx, y * ky, tex)], 4);
 	}
 	return (0);
@@ -58,22 +58,22 @@ t_img	*dr_tex(int x, int y, t_ray ray, int index)
 	double	ky;
 	t_img	*tex;
 
-	mx = fmod(ray.hit.x, tile_size);
-	my = fmod(ray.hit.y, tile_size);
+	mx = fmod(ray.hit.x, g_tile_size);
+	my = fmod(ray.hit.y, g_tile_size);
 	if (mx == 0)
 	{
-		tex = texture.ea;
-		ky = tex->height / p2.y;
-		kx = tex->width / tile_size;
-		ft_memmove(&game.img2->data[index],
+		tex = g_texture.ea;
+		ky = tex->height / g_p2.y;
+		kx = tex->width / g_tile_size;
+		ft_memmove(&g_game.img2->data[index],
 &tex->data[get_calc_index2(my * kx, (y + (x - x)) * ky, tex)], 4);
 	}
 	else if (my == 0)
 	{
-		tex = texture.so;
-		ky = tex->height / p2.y;
-		kx = tex->width / tile_size;
-		ft_memmove(&game.img2->data[index],
+		tex = g_texture.so;
+		ky = tex->height / g_p2.y;
+		kx = tex->width / g_tile_size;
+		ft_memmove(&g_game.img2->data[index],
 &tex->data[get_calc_index2(tex->width - mx * kx, y * ky, tex)], 4);
 	}
 	return (0);
@@ -87,22 +87,22 @@ t_img	*ul_tex(int x, int y, t_ray ray, int index)
 	double	ky;
 	t_img	*tex;
 
-	mx = fmod(ray.hit.x, tile_size);
-	my = fmod(ray.hit.y, tile_size);
+	mx = fmod(ray.hit.x, g_tile_size);
+	my = fmod(ray.hit.y, g_tile_size);
 	if (my == 0)
 	{
-		tex = texture.no;
-		ky = tex->height / p2.y;
-		kx = tex->width / tile_size;
-		ft_memmove(&game.img2->data[index],
+		tex = g_texture.no;
+		ky = tex->height / g_p2.y;
+		kx = tex->width / g_tile_size;
+		ft_memmove(&g_game.img2->data[index],
 &tex->data[get_calc_index2(mx * kx, y * ky, tex)], 4);
 	}
 	else if (mx == 0)
 	{
-		tex = texture.we;
-		ky = tex->height / p2.y;
-		kx = tex->width / tile_size;
-		ft_memmove(&game.img2->data[index],
+		tex = g_texture.we;
+		ky = tex->height / g_p2.y;
+		kx = tex->width / g_tile_size;
+		ft_memmove(&g_game.img2->data[index],
 &tex->data[get_calc_index2(tex->width - my * kx, (y + (x - x)) * ky, tex)], 4);
 	}
 	return (0);
@@ -116,22 +116,22 @@ t_img	*ur_tex(int x, int y, t_ray ray, int index)
 	double	ky;
 	t_img	*tex;
 
-	mx = fmod(ray.hit.x, tile_size);
-	my = fmod(ray.hit.y, tile_size);
+	mx = fmod(ray.hit.x, g_tile_size);
+	my = fmod(ray.hit.y, g_tile_size);
 	if (my == 0)
 	{
-		tex = texture.no;
-		ky = tex->height / p2.y;
-		kx = tex->width / tile_size;
-		ft_memmove(&game.img2->data[index],
+		tex = g_texture.no;
+		ky = tex->height / g_p2.y;
+		kx = tex->width / g_tile_size;
+		ft_memmove(&g_game.img2->data[index],
 &tex->data[get_calc_index2(mx * kx, y * ky, tex)], 4);
 	}
 	else if (mx == 0)
 	{
-		tex = texture.ea;
-		ky = tex->height / p2.y;
-		kx = tex->width / tile_size;
-		ft_memmove(&game.img2->data[index],
+		tex = g_texture.ea;
+		ky = tex->height / g_p2.y;
+		kx = tex->width / g_tile_size;
+		ft_memmove(&g_game.img2->data[index],
 &tex->data[get_calc_index2(my * kx, (y + (x - x)) * ky, tex)], 4);
 	}
 	return (0);

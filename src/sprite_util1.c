@@ -21,8 +21,8 @@ int			check_sp_list(t_list *tmp, t_ray ray)
 	while (tmp)
 	{
 		l_ray = (t_ray *)(tmp)->content;
-		x = (int)(floor(ray.hit.x) / tile_size);
-		y = (int)(floor(ray.hit.y) / tile_size);
+		x = (int)(floor(ray.hit.x) / g_tile_size);
+		y = (int)(floor(ray.hit.y) / g_tile_size);
 		if (l_ray->hit.x == x && l_ray->hit.y == y)
 			return (-1);
 		tmp = (tmp)->next;
@@ -35,15 +35,18 @@ void		make_sp_list(t_list **sp_list)
 	int		i;
 
 	i = 0;
-	while (i < num_rays)
+	while (i < g_num_rays)
 	{
-		if (sp_rays[i].hit_tf == true && sp_rays[i].distance < rays[i].distance)
+		if (g_sp_rays[i].hit_tf == true &&
+			g_sp_rays[i].distance < g_rays[i].distance)
 		{
-			if (check_sp_list(*sp_list, sp_rays[i]) == 1)
+			if (check_sp_list(*sp_list, g_sp_rays[i]) == 1)
 			{
-				sp_rays[i].hit.x = (int)(floor(sp_rays[i].hit.x) / tile_size);
-				sp_rays[i].hit.y = (int)(floor(sp_rays[i].hit.y) / tile_size);
-				ft_lstadd_back(sp_list, ft_lstnew((void *)&sp_rays[i]));
+				g_sp_rays[i].hit.x = (int)(floor(g_sp_rays[i].hit.x) /
+					g_tile_size);
+				g_sp_rays[i].hit.y = (int)(floor(g_sp_rays[i].hit.y) /
+					g_tile_size);
+				ft_lstadd_back(sp_list, ft_lstnew((void *)&g_sp_rays[i]));
 			}
 		}
 		i++;
@@ -55,24 +58,24 @@ void		sort_list(t_list **sp_list)
 	int		count;
 	void	*swap;
 	int		i;
-	t_list	*tmp2;
+	t_list	*tmg_p2;
 
 	i = 0;
-	tmp2 = *sp_list;
-	count = ft_lstsize(tmp2);
+	tmg_p2 = *sp_list;
+	count = ft_lstsize(tmg_p2);
 	while (i < count && count > 1)
 	{
-		tmp2 = *sp_list;
-		while (tmp2 && tmp2->next)
+		tmg_p2 = *sp_list;
+		while (tmg_p2 && tmg_p2->next)
 		{
-			if (((t_ray *)tmp2->content)->distance <
-					((t_ray *)tmp2->next->content)->distance)
+			if (((t_ray *)tmg_p2->content)->distance <
+					((t_ray *)tmg_p2->next->content)->distance)
 			{
-				swap = tmp2->content;
-				tmp2->content = tmp2->next->content;
-				tmp2->next->content = swap;
+				swap = tmg_p2->content;
+				tmg_p2->content = tmg_p2->next->content;
+				tmg_p2->next->content = swap;
 			}
-			tmp2 = tmp2->next;
+			tmg_p2 = tmg_p2->next;
 		}
 		i++;
 	}
