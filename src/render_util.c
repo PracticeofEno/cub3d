@@ -87,9 +87,6 @@ void		draw_2d_map(void)
 			else if (g_map[i][j] == '2')
 				draw_rect2(location_x, location_y,
 				g_tile_size, get_color(255, 0, 0));
-			else
-				draw_rect2(location_x, location_y,
-				g_tile_size, get_color(0, 0, 0));
 			j++;
 		}
 		i++;

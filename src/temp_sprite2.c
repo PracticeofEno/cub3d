@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static	void	calc_h_ray_s(t_point interc, t_point step, t_point *hp)
+static	void	calc_h_ray_s(t_point interc, t_point step, t_point *hp, int d)
 {
 	t_point	next_h_p;
 
@@ -22,11 +22,11 @@ static	void	calc_h_ray_s(t_point interc, t_point step, t_point *hp)
 	while (next_h_p.x >= 0 && next_h_p.x < (g_map_width * g_tile_size)
 			&& next_h_p.y >= 0 && next_h_p.y < (g_map_height * g_tile_size))
 	{
-		if (is_wall(next_h_p.x, next_h_p.y) == 2)
+		if (is_wall(next_h_p.x, next_h_p.y - ((!d) ? 1 : 0)) == 2)
 		{
 			hp->sprite_hit = true;
 			hp->x = next_h_p.x;
-			hp->y = next_h_p.y;
+			hp->y = next_h_p.y - ((!d) ? 1 : 0);
 			break ;
 		}
 		else
@@ -59,10 +59,10 @@ static void		horizontal_check_s(t_point *hit_point, double angle)
 		step.x = step.x * -1;
 	if ((rfr) && step.x < 0)
 		step.x = step.x * -1;
-	calc_h_ray_s(intercept, step, hit_point);
+	calc_h_ray_s(intercept, step, hit_point, rfd);
 }
 
-static void		calc_v_ray_s(t_point interc, t_point step, t_point *hp)
+static void		calc_v_ray_s(t_point interc, t_point step, t_point *hp, int r)
 {
 	t_point	next_h_p;
 
@@ -72,10 +72,10 @@ static void		calc_v_ray_s(t_point interc, t_point step, t_point *hp)
 	while (next_h_p.x >= 0 && next_h_p.x < (g_map_width * g_tile_size)
 			&& next_h_p.y >= 0 && next_h_p.y < (g_map_height * g_tile_size))
 	{
-		if (is_wall(next_h_p.x, next_h_p.y) == 2)
+		if (is_wall(next_h_p.x - ((!r) ? 1 : 0), next_h_p.y) == 2)
 		{
 			hp->sprite_hit = true;
-			hp->x = next_h_p.x;
+			hp->x = next_h_p.x - ((!r) ? 1 : 0);
 			hp->y = next_h_p.y;
 			break ;
 		}
@@ -109,11 +109,11 @@ static void		vertical_check_s(t_point *hit_point, double angle)
 		step.y = step.y * -1;
 	if ((rfd) && step.y < 0)
 		step.y = step.y * -1;
-	calc_v_ray_s(intercept, step, hit_point);
+	calc_v_ray_s(intercept, step, hit_point, rfr);
 	temp(&step.y);
 }
 
-void			cast_ray_sprite(double angle, int col_id)
+double			cast_ray_sprite(double angle, int col_id)
 {
 	t_point h_hit;
 	t_point v_hit;
@@ -131,7 +131,13 @@ void			cast_ray_sprite(double angle, int col_id)
 	else
 		v_dis = 999999999;
 	if (h_dis < v_dis)
+	{
 		norminette_bypass2(col_id, h_hit, h_dis, h_hit.sprite_hit);
+		return (h_dis);
+	}
 	else
+	{
 		norminette_bypass2(col_id, v_hit, v_dis, v_hit.sprite_hit);
+		return (v_dis);
+	}
 }

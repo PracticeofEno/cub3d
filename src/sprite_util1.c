@@ -37,7 +37,7 @@ void		make_sp_list(t_list **sp_list)
 	i = 0;
 	while (i < g_num_rays)
 	{
-		if (g_sp_rays[i].hit_tf == true &&
+		if (g_sp_rays[i].hit.sprite_hit == true &&
 			g_sp_rays[i].distance < g_rays[i].distance)
 		{
 			if (check_sp_list(*sp_list, g_sp_rays[i]) == 1)

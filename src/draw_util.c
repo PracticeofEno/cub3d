@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	reset_img(void)
+void	reset_img(t_img *img)
 {
 	int i;
 	int j;
@@ -27,7 +27,7 @@ void	reset_img(void)
 		j = 0;
 		while (j < width)
 		{
-			set_color((unsigned char *)&g_game.img2->data[get_calc_index(j, i)],
+			set_color((unsigned char *)&img->data[get_calc_index(j, i)],
 				get_color(0, 0, 0));
 			j++;
 		}
@@ -40,12 +40,15 @@ void	draw_2d_ray(void)
 	int i;
 
 	i = 0;
+	set_t_point(g_player.x, g_player.y, g_rays[i].hit.x, g_rays[i].hit.y);
+	draw_line(g_game, &g_p1, &g_p2, get_color(0, 255, 0));
 	while (i < g_num_rays)
 	{
-		set_t_point(g_player.x, g_player.y, g_rays[i].hit.x, g_rays[i].hit.y);
-		draw_line(g_game, &g_p1, &g_p2, get_color(0, 255, 0));
 		i++;
 	}
+	i--;
+	set_t_point(g_player.x, g_player.y, g_rays[i].hit.x, g_rays[i].hit.y);
+	draw_line(g_game, &g_p1, &g_p2, get_color(0, 255, 0));
 }
 
 void	draw_3d_ray(void)
@@ -90,5 +93,5 @@ void	norminette_bypass2(int col_id, t_point hit_p, double hit_dis, bool ht)
 	g_sp_rays[col_id].hit.x = hit_p.x;
 	g_sp_rays[col_id].hit.y = hit_p.y;
 	g_sp_rays[col_id].distance = hit_dis;
-	g_sp_rays[col_id].hit_tf = ht;
+	g_sp_rays[col_id].hit.sprite_hit = ht;
 }

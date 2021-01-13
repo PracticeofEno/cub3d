@@ -24,7 +24,7 @@ void	calc_ray_sprite(void)
 	while (i < g_num_rays)
 	{
 		g_sp_rays[i].angle = normalize_angle(ray_angle);
-		cast_ray_sprite(ray_angle, col_id);
+		cast_ray_sprite(g_sp_rays[i].angle, col_id);
 		ray_angle = ray_angle + (g_fov_angle / g_num_rays);
 		i++;
 		col_id++;

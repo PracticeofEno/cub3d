@@ -110,10 +110,17 @@ void	test(t_list *sp_list)
 		tmp = sp_list;
 		while (tmp)
 		{
+			if (tmp->max_angle > 2 * PI && g_sp_rays[i].angle < PI / 2)
+			{
+				tmp->min_angle = tmp->min_angle - 2 * PI;
+				tmp->max_angle = tmp->max_angle - 2 * PI;
+			}
 			if (tmp->min_angle <= g_sp_rays[i].angle
 				&& tmp->max_angle >= g_sp_rays[i].angle)
 			{
-				draw_item(tmp, g_sp_rays[i], i);
+				if (cast_ray(g_sp_rays[i].angle, g_num_rays)
+				> cast_ray_sprite(g_sp_rays[i].angle, g_num_rays))
+					draw_item(tmp, g_sp_rays[i], i);
 			}
 			tmp = tmp->next;
 		}

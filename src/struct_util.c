@@ -23,7 +23,7 @@ void		default_setting(void)
 	g_wall_strip_width = 1;
 	g_num_rays = (g_map_width * g_tile_size) / g_wall_strip_width;
 	g_rays = (t_ray *)malloc((g_num_rays) * sizeof(t_ray));
-	g_sp_rays = (t_ray *)malloc((g_num_rays) * sizeof(t_ray));
+	g_sp_rays = (t_ray *)malloc((g_num_rays + 1) * sizeof(t_ray));
 	if (g_rays == 0 || g_sp_rays == 0)
 		exit(1);
 }
@@ -52,13 +52,14 @@ void		update(void)
 
 void		render(void)
 {
-	reset_img();
+	reset_img(g_game.img2);
+	reset_img(g_game.img);
 	mlx_put_image_to_window(g_game.mlx, g_game.win2, g_game.img2, 0, 0);
 	update();
-	draw_2d_map();
 	player_render();
 	calc_ray();
 	draw_2d_ray();
+	draw_2d_map();
 	draw_3d_ray();
 	calc_ray_sprite();
 	draw_sprite();

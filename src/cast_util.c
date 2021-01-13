@@ -115,7 +115,7 @@ static void		vertical_check(t_point *hit_point, double angle)
 	temp(&step.y);
 }
 
-void			cast_ray(double angle, int col_id)
+double			cast_ray(double angle, int col_id)
 {
 	t_point h_hit;
 	t_point v_hit;
@@ -133,7 +133,13 @@ void			cast_ray(double angle, int col_id)
 	else
 		v_dis = 999999999;
 	if (h_dis < v_dis)
+	{
 		norminette_bypass(col_id, h_hit, h_dis, h_hit.wall_hit);
+		return (h_dis);
+	}
 	else
+	{
 		norminette_bypass(col_id, v_hit, v_dis, v_hit.wall_hit);
+		return (v_dis);
+	}
 }
