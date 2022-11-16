@@ -1,4 +1,11 @@
 # cub3d
+## 환경
+- Linux
+- need GNL Library (custom)
+- need minilibx-linux library  
+## 제작 언어  
+- C
+
 ## Raycasting을 이용한 2.5D 렌더링  
 ### 삼각함수를 이용하여 레이캐스팅 2차원 배열을 2.5D그래픽으로 렌더링
 - 제작할 당시에는 무료강의였지만 유료강의로 바뀌었습니다.
